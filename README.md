@@ -1,4 +1,4 @@
-# java_game_project
+# KaelSurvival
 
 A [libGDX](https://libgdx.com/) project generated with [gdx-liftoff](https://github.com/libgdx/gdx-liftoff).
 
