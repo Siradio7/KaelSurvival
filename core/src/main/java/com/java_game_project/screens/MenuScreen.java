@@ -78,7 +78,7 @@ public class MenuScreen implements Screen {
             public void changed(ChangeEvent event, Actor actor) {
                 audioManager.playSound(Constants.MOUSE_CLICK_SOUND);
                 Gdx.app.postRunnable(() -> {
-
+                    game.setScreen(new IntroScreen(game));
                 });
             }
         });
@@ -111,6 +111,7 @@ public class MenuScreen implements Screen {
         }
 
         camera.update();
+        System.out.println(delta);
     }
 
     @Override
