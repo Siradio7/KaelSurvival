@@ -111,7 +111,6 @@ public class MenuScreen implements Screen {
         }
 
         camera.update();
-        System.out.println(delta);
     }
 
     @Override
