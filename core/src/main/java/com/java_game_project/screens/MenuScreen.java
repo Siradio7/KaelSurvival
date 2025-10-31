@@ -2,12 +2,9 @@ package com.java_game_project.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
@@ -19,32 +16,25 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
 import com.java_game_project.Main;
-import com.java_game_project.utils.AudioManager;
 import com.java_game_project.utils.Constants;
 
-public class MenuScreen implements Screen {
-    private final Main game;
+public class MenuScreen extends AbstractScreen {
     private Stage stage;
     private Skin skin;
-    private SpriteBatch batch;
     private Texture background;
-    private OrthographicCamera camera;
     private Label titleLabel;
     private BitmapFont titleFont;
     private float backgroundScroll = 0f;
-    private final AudioManager audioManager = AudioManager.getInstance();
 
     public MenuScreen(Main game) {
+        super(game);
         audioManager.stopMusic();
         audioManager.playMusic(Constants.MENU_MUSIC, true);
-        this.game = game;
     }
 
     @Override
     public void show() {
-        camera = new OrthographicCamera();
         camera.setToOrtho(false, Constants.WINDOW_WIDTH, Constants.WINDOW_HEIGHT);
-        batch = new SpriteBatch();
         background = new Texture(Constants.BACKGROUND);
         background.setWrap(Texture.TextureWrap.Repeat, Texture.TextureWrap.Repeat);
         stage = new Stage(new ScreenViewport());

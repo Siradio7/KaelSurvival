@@ -1,19 +1,13 @@
 package com.java_game_project.screens;
 
-
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Align;
 import com.java_game_project.Main;
-import com.java_game_project.utils.AudioManager;
 import com.java_game_project.utils.Constants;
 
-public class IntroScreen implements Screen {
-    private final Main game;
-    private SpriteBatch batch;
+public class IntroScreen extends AbstractScreen {
     private BitmapFont font;
     private final String[] introLines = {
         "Les anciens racontent qu'un homme sans feu n'est plus qu'une ombre...",
@@ -24,17 +18,15 @@ public class IntroScreen implements Screen {
     private int currentLine = 0;
     private float lineTimer = 0f;
     private float displayDuration = 5f;
-    private final AudioManager audioManager = AudioManager.getInstance();
 
     public IntroScreen(Main game) {
+        super(game);
         audioManager.stopMusic();
         audioManager.playMusic(Constants.INTRO_MUSIC, false);
-        this.game = game;
     }
 
     @Override
     public void show() {
-        batch = new SpriteBatch();
         font = new BitmapFont(Gdx.files.internal(Constants.FONT));
         font.getData().setScale(1.1f);
     }
@@ -59,7 +51,9 @@ public class IntroScreen implements Screen {
             currentLine++;
 
             if (currentLine >= introLines.length) {
-                game.setScreen(new MenuScreen(game));
+                Gdx.gl.glClearColor(0, 0, 0, 1);
+                Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+                game.setScreen(new GameScreen(game));
             }
         }
     }
