@@ -16,4 +16,7 @@ public abstract class Constants {
 
     public static final String SOUNDS_PATH = "assets/sounds";
     public static final String MOUSE_CLICK_SOUND = "mouse_click";
+
+    public static final String MAPS_PATH = "assets/maps/";
+    public static final String LEVEL_1_MAP = "level_1";
 }
