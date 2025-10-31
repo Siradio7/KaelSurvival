@@ -21,7 +21,6 @@ public class IntroScreen extends AbstractScreen {
 
     public IntroScreen(Main game) {
         super(game);
-        audioManager.stopMusic();
         audioManager.playMusic(Constants.INTRO_MUSIC, false);
     }
 

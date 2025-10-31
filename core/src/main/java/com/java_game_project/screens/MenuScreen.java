@@ -28,7 +28,6 @@ public class MenuScreen extends AbstractScreen {
 
     public MenuScreen(Main game) {
         super(game);
-        audioManager.stopMusic();
         audioManager.playMusic(Constants.MENU_MUSIC, true);
     }
 
