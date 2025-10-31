@@ -6,15 +6,10 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.utils.Align;
 import com.java_game_project.Main;
 import com.java_game_project.utils.Constants;
+import com.java_game_project.utils.NarrationConstants;
 
 public class IntroScreen extends AbstractScreen {
     private BitmapFont font;
-    private final String[] introLines = {
-        "Les anciens racontent qu'un homme sans feu n'est plus qu'une ombre...",
-        "Toi, Kael, chasseur du clan du Cerf, tu as perdu le tien.",
-        "Banni pour avoir laisse mourir la flamme sacree...",
-        "Survis dix jours, rallume le feu, et peut-etre le clan te pardonnera."
-    };
     private int currentLine = 0;
     private float lineTimer = 0f;
     private float displayDuration = 5f;
@@ -41,7 +36,7 @@ public class IntroScreen extends AbstractScreen {
         batch.begin();
         font.setColor(1, 1, 1, Math.min(1, lineTimer / 2f));
 
-        String text = introLines[currentLine];
+        String text = NarrationConstants.INTRO_LINES[currentLine];
         font.draw(batch, text, 0, Gdx.graphics.getHeight() / 2f, Gdx.graphics.getWidth(), Align.center, true);
         batch.end();
 
@@ -49,7 +44,7 @@ public class IntroScreen extends AbstractScreen {
             lineTimer = 0f;
             currentLine++;
 
-            if (currentLine >= introLines.length) {
+            if (currentLine >= NarrationConstants.INTRO_LINES.length) {
                 Gdx.gl.glClearColor(0, 0, 0, 1);
                 Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
                 game.setScreen(new GameScreen(game));
