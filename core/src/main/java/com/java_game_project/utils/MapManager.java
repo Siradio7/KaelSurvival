@@ -4,7 +4,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.maps.tiled.TiledMap;
-import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.java_game_project.models.MapModel;
 
@@ -42,7 +41,7 @@ public class MapManager {
             if (file.extension().equalsIgnoreCase("tmx")) {
                 String mapName = file.nameWithoutExtension();
                 MapModel mapModel = new MapModel(mapName);
-                
+
                 maps.put(mapName, mapModel);
             }
         }
@@ -65,6 +64,10 @@ public class MapManager {
     public void render(OrthographicCamera camera) {
         renderer.setView(camera);
         renderer.render();
+    }
+
+    public OrthogonalTiledMapRenderer getRenderer() {
+        return renderer;
     }
 
     public void dispose() {
