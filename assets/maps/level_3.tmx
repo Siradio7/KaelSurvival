@@ -35,24 +35,6 @@
   <object id="14" name="tree" x="297.289" y="373.602" width="43.6527" height="46.4599"/>
   <object id="48" name="target" x="2.48942" y="1.65961" width="76.3422" height="87.1297"/>
   <object id="50" name="ork" x="412.355" y="462.135" width="32.1675" height="45.7776"/>
-  <object id="55" name="rock" x="952.631" y="416.221" width="40.4596" height="37.3297"/>
-  <object id="56" name="rock" x="819.936" y="565.526" width="38.4596" height="29.3297"/>
-  <object id="57" name="rock" x="742.322" y="499.305" width="37.4596" height="42.3297"/>
-  <object id="58" name="rock" x="686.883" y="421.887" width="32.1544" height="39.9157"/>
-  <object id="59" name="rock" x="613.943" y="542.199" width="33.4596" height="30.3297"/>
-  <object id="60" name="rock" x="1199.09" y="27.72" width="37.4596" height="42.3297"/>
-  <object id="61" name="rock" x="1336.83" y="543.974" width="37.4596" height="42.3297"/>
-  <object id="62" name="rock" x="1165.62" y="429.402" width="37.4596" height="42.3297"/>
-  <object id="63" name="rock" x="129.313" y="27.7538" width="37.4596" height="42.3297"/>
-  <object id="64" name="rock" x="758.382" y="72.2909" width="37.4596" height="42.3297"/>
-  <object id="65" name="rock" x="1351.37" y="123.046" width="37.4596" height="42.3297"/>
-  <object id="66" name="rock" x="1353.57" y="354.736" width="37.4596" height="42.3297"/>
-  <object id="67" name="rock" x="1096.79" y="229.636" width="37.4596" height="42.3297"/>
-  <object id="68" name="rock" x="1235.13" y="536.25" width="37.4596" height="42.3297"/>
-  <object id="69" name="rock" x="1147.59" y="516.94" width="37.4596" height="42.3297"/>
-  <object id="70" name="rock" x="1266.62" y="79.3799" width="37.4596" height="42.3297"/>
-  <object id="71" name="rock" x="1156.21" y="127.775" width="37.4596" height="42.3297"/>
-  <object id="72" name="rock" x="1379.58" y="33.2484" width="37.4596" height="42.3297"/>
   <object id="74" name="ork" x="166.374" y="491.51" width="32.1675" height="45.7776"/>
   <object id="75" name="ork" x="324.65" y="106.81" width="32.1675" height="45.7776"/>
   <object id="76" name="kael_start" x="1463.96" y="506.324">
@@ -75,10 +57,6 @@
   <object id="92" name="tree" x="929.672" y="165.005" width="43.6527" height="41.6944"/>
   <object id="93" name="tree" x="1051.98" y="106.231" width="43.6527" height="41.6944"/>
   <object id="94" name="tree" x="1241.01" y="192.009" width="43.6527" height="41.6944"/>
-  <object id="95" name="rock" x="866.053" y="264.761" width="37.4596" height="42.3297"/>
-  <object id="96" name="rock" x="996.308" y="293.354" width="37.4596" height="42.3297"/>
-  <object id="97" name="rock" x="1117.03" y="306.062" width="37.4596" height="42.3297"/>
-  <object id="98" name="rock" x="1237.76" y="283.823" width="37.4596" height="42.3297"/>
   <object id="99" name="ork" x="309.554" y="226.502" width="32.1675" height="45.7776"/>
   <object id="100" name="ork" x="401.686" y="218.56" width="32.1675" height="45.7776"/>
   <object id="101" name="ork" x="546.238" y="296.395" width="32.1675" height="45.7776"/>
