@@ -3,6 +3,8 @@ package com.java_game_project.utils;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.maps.MapLayer;
+import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.java_game_project.models.MapModel;
@@ -57,8 +59,8 @@ public class MapManager {
         currentMapName = mapName;
     }
 
-    public String getCurrentMap() {
-        return currentMapName;
+    public TiledMap getCurrentMap() {
+        return currentMap;
     }
 
     public void render(OrthographicCamera camera) {
