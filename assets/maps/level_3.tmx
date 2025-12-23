@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.11.2" orientation="orthogonal" renderorder="right-down" width="30" height="20" tilewidth="50" tileheight="30" infinite="0" nextlayerid="11" nextobjectid="104">
+<map version="1.10" tiledversion="1.11.2" orientation="orthogonal" renderorder="right-down" width="30" height="20" tilewidth="50" tileheight="30" infinite="0" nextlayerid="11" nextobjectid="159">
  <tileset firstgid="1" source="TilesetRiver.tsx"/>
  <tileset firstgid="41" source="TilesTree.tsx"/>
  <layer id="1" name="Tile Layer 1" width="30" height="20">
@@ -27,38 +27,60 @@
 </data>
  </layer>
  <objectgroup id="7" name="Object Layer 1">
-  <object id="2" name="tree" x="174.599" y="223.257" width="47.1921" height="49.683"/>
-  <object id="3" name="tree" x="36.268" y="251.499" width="41.2931" height="48.457"/>
-  <object id="4" name="tree" x="230.56" y="71.6238" width="43.6527" height="49.6368"/>
-  <object id="10" name="tree" x="194.289" y="377.474" width="43.6527" height="41.6944"/>
-  <object id="12" name="tree" x="56.1737" y="537.067" width="43.6527" height="49.6368"/>
-  <object id="14" name="tree" x="297.289" y="373.602" width="43.6527" height="46.4599"/>
+  <object id="12" name="tree" x="22.8404" y="509.067" width="43.6527" height="72.3035"/>
   <object id="48" name="target" x="2.48942" y="1.65961" width="76.3422" height="87.1297"/>
-  <object id="50" name="ork" x="412.355" y="462.135" width="32.1675" height="45.7776"/>
-  <object id="74" name="ork" x="166.374" y="491.51" width="32.1675" height="45.7776"/>
-  <object id="75" name="ork" x="324.65" y="106.81" width="32.1675" height="45.7776"/>
-  <object id="76" name="kael_start" x="1463.96" y="506.324">
+  <object id="74" name="ork" x="141.041" y="487.51" width="50.8342" height="84.4443"/>
+  <object id="76" name="kael_start" x="1407.96" y="595.657">
    <point/>
   </object>
-  <object id="77" name="tree" x="30.2971" y="382.626" width="43.6527" height="41.6944"/>
-  <object id="79" name="tree" x="403.886" y="72.873" width="43.6527" height="41.6944"/>
-  <object id="80" name="tree" x="438.832" y="338.149" width="43.6527" height="41.6944"/>
-  <object id="81" name="tree" x="281.573" y="524.001" width="43.6527" height="41.6944"/>
-  <object id="82" name="tree" x="488.075" y="190.42" width="43.6527" height="41.6944"/>
-  <object id="83" name="tree" x="627.861" y="142.766" width="43.6527" height="41.6944"/>
-  <object id="84" name="tree" x="542.083" y="60.1652" width="43.6527" height="41.6944"/>
-  <object id="85" name="tree" x="753.351" y="371.507" width="43.6527" height="41.6944"/>
-  <object id="86" name="tree" x="608.8" y="419.161" width="43.6527" height="41.6944"/>
-  <object id="87" name="tree" x="530.964" y="547.828" width="43.6527" height="41.6944"/>
-  <object id="88" name="tree" x="839.129" y="422.338" width="43.6527" height="41.6944"/>
-  <object id="89" name="tree" x="912.199" y="535.12" width="43.6527" height="41.6944"/>
-  <object id="90" name="tree" x="1026.57" y="487.466" width="43.6527" height="41.6944"/>
-  <object id="91" name="tree" x="1015.45" y="226.955" width="43.6527" height="41.6944"/>
-  <object id="92" name="tree" x="929.672" y="165.005" width="43.6527" height="41.6944"/>
-  <object id="93" name="tree" x="1051.98" y="106.231" width="43.6527" height="41.6944"/>
-  <object id="94" name="tree" x="1241.01" y="192.009" width="43.6527" height="41.6944"/>
-  <object id="99" name="ork" x="309.554" y="226.502" width="32.1675" height="45.7776"/>
-  <object id="100" name="ork" x="401.686" y="218.56" width="32.1675" height="45.7776"/>
-  <object id="101" name="ork" x="546.238" y="296.395" width="32.1675" height="45.7776"/>
+  <object id="94" name="tree" x="858.343" y="216.009" width="43.6527" height="41.6944"/>
+  <object id="104" name="ork" x="211.916" y="137.778" width="50.8342" height="84.4443"/>
+  <object id="105" name="ork" x="518.583" y="27.1112" width="50.8342" height="84.4443"/>
+  <object id="109" name="tree" x="279.507" y="511.848" width="43.6527" height="72.3035"/>
+  <object id="110" name="tree" x="6.17365" y="419.848" width="43.6527" height="72.3035"/>
+  <object id="111" name="tree" x="231.507" y="331.848" width="43.6527" height="72.3035"/>
+  <object id="112" name="tree" x="62.1736" y="407.848" width="43.6527" height="72.3035"/>
+  <object id="113" name="tree" x="170.174" y="41.1816" width="43.6527" height="72.3035"/>
+  <object id="114" name="tree" x="266.174" y="13.1816" width="43.6527" height="72.3035"/>
+  <object id="115" name="tree" x="470.174" y="211.848" width="43.6527" height="72.3035"/>
+  <object id="116" name="tree" x="28.8403" y="327.848" width="43.6527" height="72.3035"/>
+  <object id="117" name="tree" x="79.507" y="517.182" width="43.6527" height="72.3035"/>
+  <object id="118" name="tree" x="356.84" y="22.5149" width="43.6527" height="72.3035"/>
+  <object id="119" name="tree" x="1136.84" y="7.84825" width="43.6527" height="72.3035"/>
+  <object id="120" name="tree" x="1060.84" y="59.8482" width="43.6527" height="72.3035"/>
+  <object id="121" name="tree" x="1127.51" y="121.182" width="43.6527" height="72.3035"/>
+  <object id="122" name="tree" x="990.174" y="133.182" width="43.6527" height="72.3035"/>
+  <object id="123" name="tree" x="563.507" y="514.515" width="43.6527" height="72.3035"/>
+  <object id="124" name="tree" x="643.507" y="514.515" width="43.6527" height="72.3035"/>
+  <object id="125" name="tree" x="702.174" y="430.515" width="43.6527" height="72.3035"/>
+  <object id="126" name="tree" x="771.507" y="498.515" width="43.6527" height="72.3035"/>
+  <object id="127" name="tree" x="704.84" y="526.515" width="44.986" height="53.6368"/>
+  <object id="128" name="tree" x="508.174" y="543.848" width="38.3193" height="42.9701"/>
+  <object id="129" name="tree" x="768.174" y="93.1816" width="44.986" height="53.6368"/>
+  <object id="130" name="tree" x="1057.51" y="154.515" width="44.986" height="53.6368"/>
+  <object id="131" name="tree" x="910.84" y="154.515" width="44.986" height="53.6368"/>
+  <object id="132" name="tree" x="1184.26" y="112.567" width="43.6527" height="41.6944"/>
+  <object id="133" name="tree" x="1430.76" y="9.73909" width="43.6527" height="72.3035"/>
+  <object id="134" name="tree" x="1297.42" y="32.4057" width="43.6527" height="72.3035"/>
+  <object id="135" name="tree" x="1364.09" y="56.4062" width="43.6527" height="72.3035"/>
+  <object id="136" name="tree" x="1241.42" y="107.073" width="43.6527" height="72.3035"/>
+  <object id="137" name="tree" x="1308.76" y="128.406" width="44.986" height="53.6368"/>
+  <object id="138" name="tree" x="1199.42" y="19.0725" width="44.986" height="53.6368"/>
+  <object id="139" name="tree" x="1430.17" y="123.153" width="43.6527" height="41.6944"/>
+  <object id="146" name="tree" x="863.46" y="463.982" width="39.6712" height="65.7087"/>
+  <object id="147" name="tree" x="936.163" y="511.982" width="39.6712" height="65.7087"/>
+  <object id="148" name="tree" x="982.813" y="426.31" width="39.6712" height="65.7087"/>
+  <object id="149" name="tree" x="1075.16" y="518.774" width="39.6712" height="65.7087"/>
+  <object id="150" name="tree" x="1005.24" y="544.22" width="40.8829" height="48.7446"/>
+  <object id="151" name="tree" x="842.507" y="550.639" width="34.8242" height="39.0508"/>
+  <object id="152" name="tree" x="1183.51" y="188.486" width="43.6527" height="41.6944"/>
+  <object id="153" name="tree" x="1039.51" y="257.819" width="43.6527" height="41.6944"/>
+  <object id="154" name="tree" x="1207.51" y="440.486" width="27.6527" height="29.6944"/>
+  <object id="155" name="tree" x="1378.17" y="252.486" width="43.6527" height="41.6944"/>
+  <object id="156" name="tree" x="1240.84" y="276.486" width="43.6527" height="41.6944"/>
+  <object id="157" name="tree" x="1341.51" y="542.819" width="25.6527" height="28.6944"/>
+  <object id="158" name="river" x="359" y="582">
+   <polygon points="0,0 165,-129 188,-192 256,-265 291,-286 355,-354 423,-401 477,-447 535,-497 627,-554 677,-582 732,-581 697,-527 589,-462 522,-413 484,-372 377,-307 373,-285 373,-278 344,-262 324,-244 281,-219 257,-187 249,-186 237,-153 229,-130 225,-111 218,-102 189,-76 138,-43 88,-12 79,-3 67,13 -8,15"/>
+  </object>
  </objectgroup>
 </map>
