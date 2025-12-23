@@ -30,12 +30,4 @@ public class Player extends EntityModel {
         clampToMap();
         bounds.setPosition(position);
     }
-
-    private boolean checkCollisions(Array<Rectangle> obstacles) {
-        for  (Rectangle obstacle : obstacles) {
-            if (bounds.overlaps(obstacle)) return true;
-        }
-
-        return false;
-    }
 }

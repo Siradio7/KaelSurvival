@@ -2,6 +2,7 @@ package com.java_game_project.models;
 
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Array;
 import com.java_game_project.utils.Constants;
 
 public abstract class EntityModel {
@@ -51,5 +52,13 @@ public abstract class EntityModel {
         if (position.y < 0) position.y = 0;
         if (position.x > Constants.WINDOW_WIDTH - bounds.width) position.x = Constants.WINDOW_WIDTH - bounds.width;
         if (position.y > Constants.WINDOW_HEIGHT - bounds.height) position.y = Constants.WINDOW_HEIGHT - bounds.height;
+    }
+
+    protected boolean checkCollisions(Array<Rectangle> obstacles) {
+        for (Rectangle rect : obstacles) {
+            if (bounds.overlaps(rect)) return true;
+        }
+
+        return false;
     }
 }
