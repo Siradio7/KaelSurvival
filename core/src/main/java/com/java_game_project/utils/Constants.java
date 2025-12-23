@@ -7,7 +7,7 @@ public abstract class Constants {
 
     public static final String SKIN = "ui/glassy-ui.json";
     public static final String FONT = "ui/font-export.fnt";
-    public static final String BACKGROUND = "images/background.jpg";
+    public static final String BACKGROUND = "images/background.png";
 
 
     public static final String MUSICS_PATH = "assets/musics";
