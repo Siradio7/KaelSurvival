@@ -22,7 +22,6 @@ public class MenuScreen extends AbstractScreen {
     private Stage stage;
     private Skin skin;
     private Texture background;
-    private Label titleLabel;
     private BitmapFont titleFont;
     private float backgroundScroll = 0f;
 
@@ -41,13 +40,6 @@ public class MenuScreen extends AbstractScreen {
         skin = new Skin(Gdx.files.internal(Constants.SKIN));
         titleFont = new BitmapFont(Gdx.files.internal(Constants.FONT));
 
-        Label.LabelStyle titleStyle = new Label.LabelStyle();
-        titleStyle.font = titleFont;
-        titleStyle.fontColor = Color.GOLD;
-        titleLabel = new Label(Constants.GAME_TITLE, titleStyle);
-        titleLabel.setSize(400, 100);
-        titleLabel.setFontScale(3.0F);
-
         TextButton playButton = new TextButton("JOUER", skin);
         TextButton quitButton = new TextButton("QUITTER", skin);
         playButton.getLabel().setFontScale(0.5f);
@@ -56,7 +48,6 @@ public class MenuScreen extends AbstractScreen {
         Table table = new Table();
         table.setFillParent(true);
         table.center();
-        table.add(titleLabel).padBottom(50).row();
         table.add(playButton).size(220, 60).padBottom(20).row();
         table.add(quitButton).size(220, 60);
 
@@ -87,7 +78,7 @@ public class MenuScreen extends AbstractScreen {
         ScreenUtils.clear(0, 0, 0, 1);
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
-        batch.draw(background, 0, 0, Constants.WINDOW_WIDTH, Constants.WINDOW_HEIGHT, (int)(backgroundScroll * 100), 0, Constants.WINDOW_WIDTH, Constants.WINDOW_HEIGHT, false, false);
+        batch.draw(background, 0, 0, Constants.WINDOW_WIDTH, Constants.WINDOW_HEIGHT, (int)backgroundScroll, 0, background.getWidth(), background.getHeight(), false, false);
         batch.end();
         stage.act(delta);
         stage.draw();
