@@ -4,6 +4,7 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
+import com.java_game_project.utils.Constants;
 
 public class Ork extends EntityModel {
     private final float DETECTION_RANGE = 100f;
@@ -14,7 +15,7 @@ public class Ork extends EntityModel {
 
     public Ork(float x, float y, float width, float height) {
         super(x, y, width, height);
-        this.speed = 40f;
+        this.speed = Constants.ORK_SPEED;
     }
 
     public void updateAI(float delta, Player player, Array<Rectangle> obstacles) {
