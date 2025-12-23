@@ -25,6 +25,7 @@ public class GameScreen extends AbstractScreen {
     private Texture playerTexture;
     private Texture treeTexture;
     private Texture orkTexture;
+    private Texture mysticCave;
 
     private final Array<Sprite> trees = new Array<>();
     private final Array<Ork> orks = new Array<>();
@@ -51,6 +52,7 @@ public class GameScreen extends AbstractScreen {
         playerTexture = new Texture(Gdx.files.internal("images/player.png"));
         orkTexture    = new Texture(Gdx.files.internal("maps/ork.png"));
         treeTexture   = new Texture(Gdx.files.internal("maps/TilesTree.png"));
+        mysticCave    = new Texture(Gdx.files.internal("maps/mystic_cave.png"));
     }
 
     private void loadMapObjects() {
@@ -74,6 +76,12 @@ public class GameScreen extends AbstractScreen {
                 playerController = new PlayerController(player);
             } else if ("ork".equals(name)) {
                 orks.add(new Ork(rect.x, rect.y, 70, 70));
+            } else if ("target".equals(name)) {
+                Sprite cave = new Sprite(mysticCave);
+
+                cave.setSize(rect.width, rect.height);
+                cave.setPosition(rect.x, rect.y);
+                trees.add(cave);
             }
         }
     }
@@ -146,5 +154,6 @@ public class GameScreen extends AbstractScreen {
         if (playerTexture != null) playerTexture.dispose();
         if (treeTexture != null) treeTexture.dispose();
         if (orkTexture != null) orkTexture.dispose();
+        if (mysticCave != null) mysticCave.dispose();
     }
 }
