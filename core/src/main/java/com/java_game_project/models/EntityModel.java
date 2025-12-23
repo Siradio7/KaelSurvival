@@ -2,6 +2,7 @@ package com.java_game_project.models;
 
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.java_game_project.utils.Constants;
 
 public abstract class EntityModel {
     protected Vector2 position;
@@ -43,5 +44,12 @@ public abstract class EntityModel {
 
     public void setRotation(float rotation) {
         this.rotation = rotation;
+    }
+
+    protected void clampToMap() {
+        if (position.x < 0) position.x = 0;
+        if (position.y < 0) position.y = 0;
+        if (position.x > Constants.WINDOW_WIDTH - bounds.width) position.x = Constants.WINDOW_WIDTH - bounds.width;
+        if (position.y > Constants.WINDOW_HEIGHT - bounds.height) position.y = Constants.WINDOW_HEIGHT - bounds.height;
     }
 }
