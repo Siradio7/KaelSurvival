@@ -16,6 +16,7 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
 import com.java_game_project.Main;
+import com.java_game_project.utils.AssetLoader;
 import com.java_game_project.utils.Constants;
 
 public class MenuScreen extends AbstractScreen {
@@ -33,7 +34,7 @@ public class MenuScreen extends AbstractScreen {
     @Override
     public void show() {
         camera.setToOrtho(false, Constants.WINDOW_WIDTH, Constants.WINDOW_HEIGHT);
-        background = new Texture(Constants.BACKGROUND);
+        background = AssetLoader.getTexture(Constants.BACKGROUND);
         background.setWrap(Texture.TextureWrap.Repeat, Texture.TextureWrap.Repeat);
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
@@ -114,7 +115,6 @@ public class MenuScreen extends AbstractScreen {
     public void dispose() {
         stage.dispose();
         batch.dispose();
-        background.dispose();
         skin.dispose();
         titleFont.dispose();
         audioManager.dispose();
