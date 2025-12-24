@@ -10,21 +10,21 @@ public class Player extends EntityModel {
         this.speed = Constants.PLAYER_SPEED;
     }
 
-    public void update(float delta, Array<Rectangle> obstacles) {
+    public void update(float delta, Array<Rectangle> obstacles, Rectangle target) {
         float oldX = position.x;
         float oldY = position.y;
 
         position.x += velocity.x * delta;
         bounds.setPosition(position);
 
-        if (checkCollisions(obstacles)) {
+        if (checkCollisions(obstacles, target)) {
             position.x = oldX;
         }
 
         position.y += velocity.y * delta;
         bounds.setPosition(position);
 
-        if (checkCollisions(obstacles)) {
+        if (checkCollisions(obstacles, target)) {
             position.y = oldY;
         }
 

@@ -45,6 +45,8 @@ public class WorldRenderer {
                 orkTex.getWidth(), orkTex.getHeight(), false, false);
         }
 
+        batch.draw(caveTex, world.getTarget().x, world.getTarget().y, world.getTarget().width, world.getTarget().height);
+
         batch.end();
     }
 

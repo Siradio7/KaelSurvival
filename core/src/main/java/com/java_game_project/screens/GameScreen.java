@@ -49,6 +49,7 @@ public class GameScreen extends AbstractScreen {
             if ("tree".equals(name)) world.getObstacles().add(new Rectangle(rect));
             else if ("kael_start".equals(name)) world.setPlayer(new Player(rect.x, rect.y, 70, 70));
             else if ("ork".equals(name)) world.getOrks().add(new Ork(rect.x, rect.y, 70, 70));
+            else if ("target".equals(name)) world.setTarget(new Rectangle(rect));
         }
     }
 

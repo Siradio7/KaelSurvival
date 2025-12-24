@@ -54,11 +54,11 @@ public abstract class EntityModel {
         if (position.y > Constants.WINDOW_HEIGHT - bounds.height) position.y = Constants.WINDOW_HEIGHT - bounds.height;
     }
 
-    protected boolean checkCollisions(Array<Rectangle> obstacles) {
+    protected boolean checkCollisions(Array<Rectangle> obstacles, Rectangle target) {
         for (Rectangle rect : obstacles) {
             if (bounds.overlaps(rect)) return true;
         }
 
-        return false;
+        return target != null && bounds.overlaps(target);
     }
 }

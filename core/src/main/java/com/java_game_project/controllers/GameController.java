@@ -18,10 +18,10 @@ public class GameController {
         if (world.getPlayer() == null) return;
 
         playerController.update();
-        world.getPlayer().update(delta, world.getObstacles());
+        world.getPlayer().update(delta, world.getObstacles(), world.getTarget());
 
         for (Ork ork : world.getOrks()) {
-            ork.updateAI(delta, world.getPlayer(), world.getObstacles());
+            ork.updateAI(delta, world.getPlayer(), world.getObstacles(), world.getTarget());
             ork.update(delta);
         }
 

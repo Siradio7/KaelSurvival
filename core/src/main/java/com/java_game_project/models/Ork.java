@@ -18,7 +18,7 @@ public class Ork extends EntityModel {
         this.speed = Constants.ORK_SPEED;
     }
 
-    public void updateAI(float delta, Player player, Array<Rectangle> obstacles) {
+    public void updateAI(float delta, Player player, Array<Rectangle> obstacles, Rectangle target) {
         float distance = position.dst(player.getPosition());
 
         if (distance < DETECTION_RANGE) {
@@ -28,7 +28,7 @@ public class Ork extends EntityModel {
             patrolRandomly(delta);
         }
 
-        applyMovement(delta, obstacles);
+        applyMovement(delta, obstacles, target);
     }
 
     private void chasePlayer(Player player) {
@@ -57,19 +57,19 @@ public class Ork extends EntityModel {
         }
     }
 
-    private void applyMovement(float delta, Array<Rectangle> obstacles) {
+    private void applyMovement(float delta, Array<Rectangle> obstacles, Rectangle target) {
         float oldX = position.x;
         float oldY = position.y;
 
         position.x += velocity.x * delta;
         bounds.setPosition(position);
-        if (checkCollisions(obstacles)) {
+        if (checkCollisions(obstacles, target)) {
             position.x = oldX;
         }
 
         position.y += velocity.y * delta;
         bounds.setPosition(position);
-        if (checkCollisions(obstacles)) {
+        if (checkCollisions(obstacles, target)) {
             position.y = oldY;
         }
 
