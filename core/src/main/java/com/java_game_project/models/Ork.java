@@ -11,7 +11,7 @@ public class Ork extends EntityModel {
 
     private float patrolTimer = 0;
     private final float PATROL_CHANGE_TIME = 2.0f;
-    private Vector2 patrolDirection = new Vector2();
+    private final float ROTATION_ANGLES[] = { 0f, 45f, 90f, 135f, 180f, 225f, 270f, 315f };
 
     public Ork(float x, float y, float width, float height) {
         super(x, y, width, height);
@@ -31,13 +31,29 @@ public class Ork extends EntityModel {
         applyMovement(delta, obstacles, target);
     }
 
-    private void chasePlayer(Player player) {
-        Vector2 direction = new Vector2(player.getPosition())
-            .sub(this.position)
-            .nor();
-        velocity.set(direction.x * speed, direction.y * speed);
+    private float getNearestAngle(float angle) {
+        angle = (angle % 360 + 360) % 360;
+        float closest = ROTATION_ANGLES[0];
+        float minDiff = Float.MAX_VALUE;
 
-        rotation = (float) Math.toDegrees(Math.atan2(velocity.x, -velocity.y));
+        for (float a : ROTATION_ANGLES) {
+            float diff = Math.abs(a - angle);
+            if (diff > 180) diff = 360 - diff;
+
+            if (diff < minDiff) {
+                minDiff = diff;
+                closest = a;
+            }
+        }
+        return closest;
+    }
+
+    private void chasePlayer(Player player) {
+        Vector2 direction = new Vector2(player.getPosition()).sub(this.position).nor();
+        float rawAngle = (float) Math.toDegrees(Math.atan2(direction.x, -direction.y));
+
+        rotation = getNearestAngle(rawAngle);
+        velocity.set((float) Math.sin(Math.toRadians(rotation)) * speed, -(float) Math.cos(Math.toRadians(rotation)) * speed);
     }
 
     private void patrolRandomly(float delta) {
@@ -47,10 +63,8 @@ public class Ork extends EntityModel {
             patrolTimer = 0;
 
             if (MathUtils.randomBoolean()) {
-                float randomAngle = MathUtils.random(0f, 360f);
-                patrolDirection.set(1, 0).setAngleDeg(randomAngle);
-                velocity.set(patrolDirection.x * (speed / 2), patrolDirection.y * (speed / 2));
-                rotation = randomAngle;
+                rotation = ROTATION_ANGLES[MathUtils.random(ROTATION_ANGLES.length - 1)];
+                velocity.set((float) Math.sin(Math.toRadians(rotation)) * (speed / 2), -(float) Math.cos(Math.toRadians(rotation)) * (speed / 2));
             } else {
                 velocity.set(0, 0);
             }
