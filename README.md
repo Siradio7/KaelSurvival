@@ -37,7 +37,7 @@ Le projet respecte strictement le design pattern **MVC** (Modèle-Vue-Contrôleu
 ### Exécution
 1. Clonez le dépôt :
    ```bash
-   git clone [https://github.com/votre-repo/kaelsurvival.git](https://github.com/votre-repo/kaelsurvival.git)
+   git clone https://github.com/Siradio7/KaelSurvival.git
 
 ## 1. Lancement du Projet avec Gradle
 Le projet utilise Gradle pour automatiser la gestion des dépendances et l'exécution. Vous pouvez lancer le jeu en utilisant le wrapper Gradle inclus :
