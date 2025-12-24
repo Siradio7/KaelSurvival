@@ -1,6 +1,9 @@
 package com.java_game_project.controllers;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.math.MathUtils;
 import com.java_game_project.models.GameWorld;
 import com.java_game_project.models.Ork;
 import com.java_game_project.utils.Constants;
@@ -9,6 +12,9 @@ public class GameController {
     private final GameWorld world;
     private final PlayerController playerController;
 
+    private final float ZOOM_SPEED = 0.3f;
+    private final float MIN_ZOOM = 0.3f;
+
     public GameController(GameWorld world) {
         this.world = world;
         this.playerController = new PlayerController(world.getPlayer());
@@ -16,6 +22,8 @@ public class GameController {
 
     public void update(float delta, OrthographicCamera camera) {
         if (world.getPlayer() == null) return;
+
+        handleZoom(delta, camera);
 
         playerController.update();
         world.getPlayer().update(delta, world.getObstacles(), world.getTarget());
@@ -26,6 +34,22 @@ public class GameController {
         }
 
         updateCamera(camera);
+    }
+
+    private void handleZoom(float delta, OrthographicCamera camera) {
+        float maxZoomX = Constants.WINDOW_WIDTH / camera.viewportWidth;
+        float maxZoomY = Constants.WINDOW_HEIGHT / camera.viewportHeight;
+        float maxZoomAllowed = Math.min(maxZoomX, maxZoomY);
+
+        if (Gdx.input.isKeyPressed(Input.Keys.P)) {
+            camera.zoom -= ZOOM_SPEED * delta;
+        }
+
+        if (Gdx.input.isKeyPressed(Input.Keys.M)) {
+            camera.zoom += ZOOM_SPEED * delta;
+        }
+
+        camera.zoom = MathUtils.clamp(camera.zoom, MIN_ZOOM, maxZoomAllowed);
     }
 
     private void updateCamera(OrthographicCamera camera) {
