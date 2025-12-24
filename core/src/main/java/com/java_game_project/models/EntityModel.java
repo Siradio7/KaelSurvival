@@ -4,6 +4,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.java_game_project.utils.Constants;
+import com.java_game_project.utils.EntityState;
 
 public abstract class EntityModel {
     protected Vector2 position;
@@ -11,6 +12,9 @@ public abstract class EntityModel {
     protected Rectangle bounds;
     protected float speed;
     protected float rotation;
+
+    protected EntityState state = EntityState.IDLE;
+    protected float stateTime = 0;
 
     public EntityModel(float x, float y, float width, float height) {
         this.position = new Vector2(x, y);
@@ -21,31 +25,24 @@ public abstract class EntityModel {
     public void update(float delta) {
         position.add(velocity.x * delta, velocity.y * delta);
         bounds.setPosition(position);
+        stateTime += delta;
     }
 
-    public Vector2 getPosition() {
-        return position;
+    public void setState(EntityState newState) {
+        if (this.state != newState) {
+            this.state = newState;
+            this.stateTime = 0;
+        }
     }
 
-    public Rectangle getBounds() {
-        return bounds;
-    }
-
-    public Vector2 getVelocity() {
-        return velocity;
-    }
-
-    public float getSpeed() {
-        return speed;
-    }
-
-    public float getRotation() {
-        return rotation;
-    }
-
-    public void setRotation(float rotation) {
-        this.rotation = rotation;
-    }
+    public EntityState getState() { return state; }
+    public float getStateTime() { return stateTime; }
+    public Vector2 getPosition() { return position; }
+    public Rectangle getBounds() { return bounds; }
+    public Vector2 getVelocity() { return velocity; }
+    public float getSpeed() { return speed; }
+    public float getRotation() { return rotation; }
+    public void setRotation(float rotation) { this.rotation = rotation; }
 
     protected void clampToMap() {
         if (position.x < 0) position.x = 0;
@@ -60,5 +57,9 @@ public abstract class EntityModel {
         }
 
         return target != null && bounds.overlaps(target);
+    }
+
+    public void updateAnimation(float delta) {
+        this.stateTime += delta;
     }
 }

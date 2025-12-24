@@ -5,10 +5,10 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.java_game_project.utils.Constants;
+import com.java_game_project.utils.EntityState;
 
 public class Ork extends EntityModel {
     private final float DETECTION_RANGE = 100f;
-
     private float patrolTimer = 0;
     private final float PATROL_CHANGE_TIME = 2.0f;
     private final float ROTATION_ANGLES[] = { 0f, 45f, 90f, 135f, 180f, 225f, 270f, 315f };
@@ -39,7 +39,6 @@ public class Ork extends EntityModel {
         for (float a : ROTATION_ANGLES) {
             float diff = Math.abs(a - angle);
             if (diff > 180) diff = 360 - diff;
-
             if (diff < minDiff) {
                 minDiff = diff;
                 closest = a;
@@ -58,10 +57,8 @@ public class Ork extends EntityModel {
 
     private void patrolRandomly(float delta) {
         patrolTimer += delta;
-
         if (patrolTimer >= PATROL_CHANGE_TIME) {
             patrolTimer = 0;
-
             if (MathUtils.randomBoolean()) {
                 rotation = ROTATION_ANGLES[MathUtils.random(ROTATION_ANGLES.length - 1)];
                 velocity.set((float) Math.sin(Math.toRadians(rotation)) * (speed / 2), -(float) Math.cos(Math.toRadians(rotation)) * (speed / 2));
@@ -72,6 +69,7 @@ public class Ork extends EntityModel {
     }
 
     private void applyMovement(float delta, Array<Rectangle> obstacles, Rectangle target) {
+        updateAnimation(delta);
         float oldX = position.x;
         float oldY = position.y;
 
@@ -85,6 +83,13 @@ public class Ork extends EntityModel {
         bounds.setPosition(position);
         if (checkCollisions(obstacles, target)) {
             position.y = oldY;
+        }
+
+        // Mise à jour de l'état selon le mouvement réel
+        if (velocity.x != 0 || velocity.y != 0) {
+            setState(EntityState.WALKING);
+        } else {
+            setState(EntityState.IDLE);
         }
 
         clampToMap();

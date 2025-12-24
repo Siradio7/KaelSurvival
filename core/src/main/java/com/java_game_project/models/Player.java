@@ -11,6 +11,7 @@ public class Player extends EntityModel {
     }
 
     public void update(float delta, Array<Rectangle> obstacles, Rectangle target) {
+        updateAnimation(delta);
         float oldX = position.x;
         float oldY = position.y;
 

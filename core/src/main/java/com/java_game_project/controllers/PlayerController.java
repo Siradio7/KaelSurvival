@@ -3,6 +3,7 @@ package com.java_game_project.controllers;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.java_game_project.models.Player;
+import com.java_game_project.utils.EntityState;
 
 public class PlayerController {
     private final Player player;
@@ -23,8 +24,11 @@ public class PlayerController {
         player.getVelocity().set(vx, vy);
 
         if (vx != 0 || vy != 0) {
+            player.setState(EntityState.WALKING);
             float angle = (float) Math.toDegrees(Math.atan2(vx, -vy));
             player.setRotation(angle);
+        } else {
+            player.setState(EntityState.IDLE);
         }
 
         return player;

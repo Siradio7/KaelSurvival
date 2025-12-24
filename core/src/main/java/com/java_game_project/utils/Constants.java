@@ -17,7 +17,7 @@ public abstract class Constants {
     public static final String SOUNDS_PATH = "assets/sounds";
     public static final String MOUSE_CLICK_SOUND = "mouse_click";
 
-    public static final float PLAYER_SPEED = 200f;
+    public static final float PLAYER_SPEED = 100f;
     public static final float ORK_SPEED = 40f;
 
     public static final String MAPS_PATH = "assets/maps/";
