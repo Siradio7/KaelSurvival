@@ -27,7 +27,7 @@ public class GameScreen extends AbstractScreen {
     @Override
     public void show() {
         camera.setToOrtho(false, Constants.WINDOW_WIDTH, Constants.WINDOW_HEIGHT);
-        camera.zoom = 0.5f;
+        camera.zoom = 0.7f;
 
         world = new GameWorld();
         loadMapData();
