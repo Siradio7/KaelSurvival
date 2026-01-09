@@ -3,7 +3,9 @@ package com.java_game_project.controllers;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.MathUtils;
+import com.java_game_project.models.Consumable;
 import com.java_game_project.Main;
 import com.java_game_project.models.GameWorld;
 import com.java_game_project.models.Ork;
@@ -46,6 +48,31 @@ public class GameController {
         }
 
         updateCamera(camera);
+
+        for (Consumable item : world.getConsumables()) {
+            item.update(delta);
+            if (!item.isActive())
+                continue;
+
+            Rectangle expandedBounds = new Rectangle(item.getBounds());
+            expandedBounds.x -= 5;
+            expandedBounds.y -= 5;
+            expandedBounds.width += 10;
+            expandedBounds.height += 10;
+
+            boolean istouching = world.getPlayer().getBounds().overlaps(expandedBounds);
+
+            if (istouching) {
+                if (world.getPlayer().getHealth() < world.getPlayer().getMaxHealth()) {
+                    if (MathUtils.random() < Consumable.getHealRate() * delta) {
+                        world.getPlayer().setHealth(
+                                Math.min(world.getPlayer().getHealth() + 1, world.getPlayer().getMaxHealth()));
+                    }
+                } else {
+                    item.consume();
+                }
+            }
+        }
     }
 
     private void handleZoom(float delta, OrthographicCamera camera) {

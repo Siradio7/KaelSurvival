@@ -8,6 +8,7 @@ import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.math.Rectangle;
 import com.java_game_project.Main;
 import com.java_game_project.controllers.GameController;
+import com.java_game_project.models.Consumable;
 import com.java_game_project.models.GameWorld;
 import com.java_game_project.models.Ork;
 import com.java_game_project.models.Player;
@@ -41,7 +42,7 @@ public class GameScreen extends AbstractScreen {
 
     private void loadMapData() {
         MapManager.getInstance().addMaps(Constants.MAPS_PATH);
-        MapManager.getInstance().loadMap(Constants.LEVEL_3_MAP);
+        MapManager.getInstance().loadMap(Constants.LEVEL_2_MAP);
 
         MapLayer layer = MapManager.getInstance().getCurrentMap().getLayers().get("Object Layer 1");
         for (MapObject object : layer.getObjects()) {
@@ -50,14 +51,19 @@ public class GameScreen extends AbstractScreen {
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
             String name = object.getName();
 
-            if ("tree".equals(name))
-                world.getObstacles().add(new Rectangle(rect));
-            else if ("kael_start".equals(name))
+            if ("tree".equals(name)) {
+                world.addTree(new Rectangle(rect));
+            } else if ("obstacle".equals(name)) {
+                world.addWall(new Rectangle(rect));
+            } else if ("nourriture".equals(name)) {
+                world.addConsumable(new Consumable(rect.x, rect.y, rect.width, rect.height));
+            } else if ("kael_start".equals(name)) {
                 world.setPlayer(new Player(rect.x, rect.y, 70, 70));
-            else if ("ork".equals(name))
+            } else if ("ork".equals(name)) {
                 world.getOrks().add(new Ork(rect.x, rect.y, 70, 70));
-            else if ("target".equals(name))
+            } else if ("target".equals(name)) {
                 world.setTarget(new Rectangle(rect));
+            }
         }
     }
 

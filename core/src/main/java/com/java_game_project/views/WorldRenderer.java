@@ -49,11 +49,12 @@ public class WorldRenderer {
                         ? playerWalkAnim.getKeyFrame(p.getStateTime(), true)
                         : playerIdle;
 
-                batch.draw(currentFrame, p.getPosition().x, p.getPosition().y, p.getBounds().width / 2, p.getBounds().height / 2, p.getBounds().width, p.getBounds().height, 1, 1, p.getRotation());
+                batch.draw(currentFrame, p.getPosition().x, p.getPosition().y, p.getBounds().width / 2,
+                        p.getBounds().height / 2, p.getBounds().width, p.getBounds().height, 1, 1, p.getRotation());
             }
         }
 
-        for (Rectangle r : world.getObstacles()) {
+        for (Rectangle r : world.getTrees()) {
             batch.draw(treeTex, r.x, r.y, r.width, r.height);
         }
 
@@ -62,11 +63,13 @@ public class WorldRenderer {
                     ? orkWalkAnim.getKeyFrame(o.getStateTime(), true)
                     : orkIdle;
 
-            batch.draw(currentFrame, o.getPosition().x, o.getPosition().y, o.getBounds().width / 2, o.getBounds().height / 2, o.getBounds().width, o.getBounds().height, 1, 1, o.getRotation());
+            batch.draw(currentFrame, o.getPosition().x, o.getPosition().y, o.getBounds().width / 2,
+                    o.getBounds().height / 2, o.getBounds().width, o.getBounds().height, 1, 1, o.getRotation());
         }
 
         if (world.getTarget() != null) {
-            batch.draw(caveTex, world.getTarget().x, world.getTarget().y, world.getTarget().width, world.getTarget().height);
+            batch.draw(caveTex, world.getTarget().x, world.getTarget().y, world.getTarget().width,
+                    world.getTarget().height);
         }
 
         batch.end();
