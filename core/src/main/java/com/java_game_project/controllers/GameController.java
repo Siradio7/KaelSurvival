@@ -4,8 +4,10 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.MathUtils;
+import com.java_game_project.Main;
 import com.java_game_project.models.GameWorld;
 import com.java_game_project.models.Ork;
+import com.java_game_project.screens.GameOverScreen;
 import com.java_game_project.utils.Constants;
 
 public class GameController {
@@ -21,7 +23,8 @@ public class GameController {
     }
 
     public void update(float delta, OrthographicCamera camera) {
-        if (world.getPlayer() == null) return;
+        if (world.getPlayer() == null)
+            return;
 
         handleZoom(delta, camera);
 
@@ -31,6 +34,15 @@ public class GameController {
         for (Ork ork : world.getOrks()) {
             ork.updateAI(delta, world.getPlayer(), world.getObstacles(), world.getTarget());
             ork.update(delta);
+
+            if (world.getPlayer().getBounds().overlaps(ork.getBounds())) {
+                world.getPlayer().takeDamage(10);
+            }
+        }
+
+        if (world.getPlayer().getHealth() <= 0) {
+            ((Main) Gdx.app.getApplicationListener())
+                    .setScreen(new GameOverScreen((Main) Gdx.app.getApplicationListener()));
         }
 
         updateCamera(camera);
