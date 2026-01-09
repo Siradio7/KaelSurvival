@@ -14,11 +14,13 @@ import com.java_game_project.models.Player;
 import com.java_game_project.utils.Constants;
 import com.java_game_project.utils.MapManager;
 import com.java_game_project.views.WorldRenderer;
+import com.java_game_project.views.Hud;
 
 public class GameScreen extends AbstractScreen {
     private GameWorld world;
     private GameController controller;
     private WorldRenderer renderer;
+    private Hud hud;
 
     public GameScreen(Main game) {
         super(game);
@@ -34,6 +36,7 @@ public class GameScreen extends AbstractScreen {
 
         controller = new GameController(world);
         renderer = new WorldRenderer(world);
+        hud = new Hud(batch, world.getPlayer());
     }
 
     private void loadMapData() {
@@ -42,14 +45,19 @@ public class GameScreen extends AbstractScreen {
 
         MapLayer layer = MapManager.getInstance().getCurrentMap().getLayers().get("Object Layer 1");
         for (MapObject object : layer.getObjects()) {
-            if (!(object instanceof RectangleMapObject)) continue;
+            if (!(object instanceof RectangleMapObject))
+                continue;
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
             String name = object.getName();
 
-            if ("tree".equals(name)) world.getObstacles().add(new Rectangle(rect));
-            else if ("kael_start".equals(name)) world.setPlayer(new Player(rect.x, rect.y, 70, 70));
-            else if ("ork".equals(name)) world.getOrks().add(new Ork(rect.x, rect.y, 70, 70));
-            else if ("target".equals(name)) world.setTarget(new Rectangle(rect));
+            if ("tree".equals(name))
+                world.getObstacles().add(new Rectangle(rect));
+            else if ("kael_start".equals(name))
+                world.setPlayer(new Player(rect.x, rect.y, 70, 70));
+            else if ("ork".equals(name))
+                world.getOrks().add(new Ork(rect.x, rect.y, 70, 70));
+            else if ("target".equals(name))
+                world.setTarget(new Rectangle(rect));
         }
     }
 
@@ -57,15 +65,26 @@ public class GameScreen extends AbstractScreen {
     public void render(float delta) {
         controller.update(delta, camera);
 
+        Gdx.gl.glViewport(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         renderer.render(batch, camera);
+
+        batch.setProjectionMatrix(hud.stage.getCamera().combined);
+        hud.stage.draw();
+        hud.update(delta);
+    }
+
+    @Override
+    public void resize(int width, int height) {
+        hud.stage.getViewport().update(width, height);
     }
 
     @Override
     public void dispose() {
         renderer.dispose();
         MapManager.getInstance().dispose();
+        hud.dispose();
     }
 }

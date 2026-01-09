@@ -13,6 +13,9 @@ public abstract class EntityModel {
     protected float speed;
     protected float rotation;
 
+    protected int health;
+    protected int maxHealth;
+
     protected EntityState state = EntityState.IDLE;
     protected float stateTime = 0;
 
@@ -20,6 +23,8 @@ public abstract class EntityModel {
         this.position = new Vector2(x, y);
         this.velocity = new Vector2(0, 0);
         this.bounds = new Rectangle(x, y, width, height);
+        this.maxHealth = 100;
+        this.health = 100;
     }
 
     public void update(float delta) {
@@ -35,14 +40,54 @@ public abstract class EntityModel {
         }
     }
 
-    public EntityState getState() { return state; }
-    public float getStateTime() { return stateTime; }
-    public Vector2 getPosition() { return position; }
-    public Rectangle getBounds() { return bounds; }
-    public Vector2 getVelocity() { return velocity; }
-    public float getSpeed() { return speed; }
-    public float getRotation() { return rotation; }
-    public void setRotation(float rotation) { this.rotation = rotation; }
+    public EntityState getState() {
+        return state;
+    }
+
+    public float getStateTime() {
+        return stateTime;
+    }
+
+    public Vector2 getPosition() {
+        return position;
+    }
+
+    public Rectangle getBounds() {
+        return bounds;
+    }
+
+    public Vector2 getVelocity() {
+        return velocity;
+    }
+
+    public float getSpeed() {
+        return speed;
+    }
+
+    public float getRotation() {
+        return rotation;
+    }
+
+    public void setRotation(float rotation) {
+        this.rotation = rotation;
+    }
+
+    public int getHealth() {
+        return health;
+    }
+
+    public int getMaxHealth() {
+        return maxHealth;
+    }
+
+    public void setHealth(int health) {
+        this.health = health;
+    }
+
+    public void damage(int amount) {
+        this.health -= amount;
+        if (this.health < 0) this.health = 0;
+    }
 
     protected void clampToMap() {
         if (position.x < 0) position.x = 0;
@@ -53,7 +98,8 @@ public abstract class EntityModel {
 
     protected boolean checkCollisions(Array<Rectangle> obstacles, Rectangle target) {
         for (Rectangle rect : obstacles) {
-            if (bounds.overlaps(rect)) return true;
+            if (bounds.overlaps(rect))
+                return true;
         }
 
         return target != null && bounds.overlaps(target);
