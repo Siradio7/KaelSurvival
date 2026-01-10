@@ -43,9 +43,10 @@ public class GameController {
             ork.update(delta);
 
             if (world.getPlayer().getBounds().overlaps(ork.getBounds())) {
-                if (!world.getPlayer().isInvincible()) {
-                    world.getPlayer().takeDamage(10);
-                    world.addFloatingText(new FloatingText("-10", world.getPlayer().getPosition().x,
+                // Progressive damage
+                if (MathUtils.random() < 5.0f * delta) {
+                    world.getPlayer().damage(1);
+                    world.addFloatingText(new FloatingText("-1", world.getPlayer().getPosition().x,
                             world.getPlayer().getPosition().y + 50, Color.RED));
                 }
             }
