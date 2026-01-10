@@ -12,6 +12,7 @@ import com.java_game_project.models.GameWorld;
 import com.java_game_project.models.Ork;
 import com.java_game_project.screens.GameOverScreen;
 import com.java_game_project.utils.Constants;
+import com.java_game_project.utils.NarrationConstants;
 import com.badlogic.gdx.graphics.Color;
 import java.util.Iterator;
 
@@ -22,6 +23,10 @@ public class GameController {
 
     private final float ZOOM_SPEED = 0.3f;
     private final float MIN_ZOOM = 0.3f;
+
+    private boolean startThoughtTriggered = false;
+    private boolean exitThoughtTriggered = false;
+    private boolean lowHealthTriggered = false;
 
     public GameController(GameWorld world, String currentLevel) {
         this.world = world;
@@ -43,11 +48,10 @@ public class GameController {
             ork.update(delta);
 
             if (world.getPlayer().getBounds().overlaps(ork.getBounds())) {
-                // Progressive damage
                 if (MathUtils.random() < 5.0f * delta) {
                     world.getPlayer().damage(1);
                     world.addFloatingText(new FloatingText("-1", world.getPlayer().getPosition().x,
-                            world.getPlayer().getPosition().y + 50, Color.RED));
+                            world.getPlayer().getPosition().y + 50, Color.RED, FloatingText.Type.DAMAGE));
                 }
             }
         }
@@ -102,13 +106,15 @@ public class GameController {
                         world.getPlayer().setHealth(
                                 Math.min(world.getPlayer().getHealth() + 1, world.getPlayer().getMaxHealth()));
                         world.addFloatingText(new FloatingText("+1", world.getPlayer().getPosition().x,
-                                world.getPlayer().getPosition().y + 50, Color.GREEN));
+                                world.getPlayer().getPosition().y + 50, Color.GREEN, FloatingText.Type.HEAL));
                     }
                 } else {
                     item.consume();
                 }
             }
         }
+
+        handleNarration();
     }
 
     private void handleZoom(float delta, OrthographicCamera camera) {
@@ -139,5 +145,33 @@ public class GameController {
 
         camera.position.set(camX, camY, 0);
         camera.update();
+    }
+
+    private void handleNarration() {
+        if (!startThoughtTriggered && world.getTime() > 1.0f) {
+            world.addFloatingText(new FloatingText(com.java_game_project.utils.NarrationConstants.GAME_START_THOUGHT,
+                    world.getPlayer().getPosition().x - 100, world.getPlayer().getPosition().y + 100, Color.CYAN,
+                    FloatingText.Type.THOUGHT));
+            startThoughtTriggered = true;
+        }
+
+        if (!exitThoughtTriggered && world.getExitZone() != null) {
+            float dist = world.getPlayer().getPosition().dst(world.getExitZone().x, world.getExitZone().y);
+            if (dist < 400) {
+                world.addFloatingText(new FloatingText(com.java_game_project.utils.NarrationConstants.EXIT_NEAR_THOUGHT,
+                        world.getPlayer().getPosition().x - 100, world.getPlayer().getPosition().y + 100, Color.CYAN,
+                        FloatingText.Type.THOUGHT));
+                exitThoughtTriggered = true;
+            }
+        }
+
+        if (!lowHealthTriggered && world.getPlayer().getHealth() < 30) {
+            world.addFloatingText(new FloatingText(NarrationConstants.LOW_HEALTH_THOUGHT,
+                    world.getPlayer().getPosition().x, world.getPlayer().getPosition().y + 100, Color.ORANGE,
+                    FloatingText.Type.THOUGHT));
+            lowHealthTriggered = true;
+        } else if (lowHealthTriggered && world.getPlayer().getHealth() > 50) {
+            lowHealthTriggered = false;
+        }
     }
 }

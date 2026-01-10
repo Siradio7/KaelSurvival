@@ -4,7 +4,12 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector2;
 
 public class FloatingText {
+    public enum Type {
+        DAMAGE, HEAL, THOUGHT
+    }
+
     private String text;
+    private Type type;
     private Vector2 position;
     private Vector2 velocity;
     private float timer;
@@ -12,14 +17,25 @@ public class FloatingText {
     private Color color;
     private boolean finished;
 
-    public FloatingText(String text, float x, float y, Color color) {
+    public FloatingText(String text, float x, float y, Color color, Type type) {
         this.text = text;
         this.position = new Vector2(x, y);
-        this.velocity = new Vector2(0, 50);
         this.color = color;
-        this.maxTime = 1.0f;
+        this.type = type;
         this.timer = 0;
         this.finished = false;
+
+        switch (type) {
+            case DAMAGE:
+            case HEAL:
+                this.velocity = new Vector2(0, 50);
+                this.maxTime = 1.0f;
+                break;
+            case THOUGHT:
+                this.velocity = new Vector2(0, 20);
+                this.maxTime = 4.0f;
+                break;
+        }
     }
 
     public void update(float delta) {
