@@ -22,9 +22,15 @@ public class GameScreen extends AbstractScreen {
     private GameController controller;
     private WorldRenderer renderer;
     private Hud hud;
+    private String currentMapName;
 
     public GameScreen(Main game) {
+        this(game, Constants.LEVEL_2_MAP); // Default to Level 2
+    }
+
+    public GameScreen(Main game, String mapName) {
         super(game);
+        this.currentMapName = mapName;
     }
 
     @Override
@@ -35,14 +41,14 @@ public class GameScreen extends AbstractScreen {
         world = new GameWorld();
         loadMapData();
 
-        controller = new GameController(world);
+        controller = new GameController(world, currentMapName);
         renderer = new WorldRenderer(world);
         hud = new Hud(batch, world.getPlayer());
     }
 
     private void loadMapData() {
         MapManager.getInstance().addMaps(Constants.MAPS_PATH);
-        MapManager.getInstance().loadMap(Constants.LEVEL_2_MAP);
+        MapManager.getInstance().loadMap(currentMapName);
 
         MapLayer layer = MapManager.getInstance().getCurrentMap().getLayers().get("Object Layer 1");
         for (MapObject object : layer.getObjects()) {
@@ -63,6 +69,8 @@ public class GameScreen extends AbstractScreen {
                 world.getOrks().add(new Ork(rect.x, rect.y, 70, 70));
             } else if ("target".equals(name)) {
                 world.setTarget(new Rectangle(rect));
+            } else if ("exit_zone".equals(name)) {
+                world.setExitZone(new Rectangle(rect));
             }
         }
     }

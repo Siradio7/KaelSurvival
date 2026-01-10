@@ -16,7 +16,7 @@ import com.java_game_project.utils.MapManager;
 
 public class WorldRenderer {
     private final GameWorld world;
-    private final Texture treeTex, caveTex;
+    private final Texture treeTex, caveTex, exitTex;
     private final Animation<TextureRegion> playerWalkAnim;
     private final Animation<TextureRegion> orkWalkAnim;
     private final TextureRegion playerIdle, orkIdle;
@@ -26,6 +26,7 @@ public class WorldRenderer {
 
         this.treeTex = new Texture(Gdx.files.internal("maps/TilesTree.png"));
         this.caveTex = new Texture(Gdx.files.internal("maps/mystic_cave.png"));
+        this.exitTex = new Texture(Gdx.files.internal("images/portail.png"));
 
         this.playerWalkAnim = AnimationUtils.loadAnimation("images/player_walk.png", 250, 250, 0.1f);
         this.orkWalkAnim = AnimationUtils.loadAnimation("images/ork_attack.png", 250, 250, 0.1f);
@@ -72,12 +73,22 @@ public class WorldRenderer {
                     world.getTarget().height);
         }
 
+        if (world.getExitZone() != null) {
+            float scale = 2.0f; // Increase visual size without changing hitbox
+            float width = world.getExitZone().width * scale;
+            float height = world.getExitZone().height * scale;
+            float x = world.getExitZone().x - (width - world.getExitZone().width) / 2;
+            float y = world.getExitZone().y - (height - world.getExitZone().height) / 2;
+            batch.draw(exitTex, x, y, width, height);
+        }
+
         batch.end();
     }
 
     public void dispose() {
         treeTex.dispose();
         caveTex.dispose();
+        exitTex.dispose();
         playerIdle.getTexture().dispose();
         orkIdle.getTexture().dispose();
     }

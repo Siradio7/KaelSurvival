@@ -10,17 +10,20 @@ import com.java_game_project.Main;
 import com.java_game_project.models.GameWorld;
 import com.java_game_project.models.Ork;
 import com.java_game_project.screens.GameOverScreen;
+import com.java_game_project.screens.MenuScreen;
 import com.java_game_project.utils.Constants;
 
 public class GameController {
     private final GameWorld world;
+    private final String currentLevel;
     private final PlayerController playerController;
 
     private final float ZOOM_SPEED = 0.3f;
     private final float MIN_ZOOM = 0.3f;
 
-    public GameController(GameWorld world) {
+    public GameController(GameWorld world, String currentLevel) {
         this.world = world;
+        this.currentLevel = currentLevel;
         this.playerController = new PlayerController(world.getPlayer());
     }
 
@@ -45,6 +48,18 @@ public class GameController {
         if (world.getPlayer().getHealth() <= 0) {
             ((Main) Gdx.app.getApplicationListener())
                     .setScreen(new GameOverScreen((Main) Gdx.app.getApplicationListener()));
+        }
+
+        // Handle level exit
+        if (world.getExitZone() != null && world.getPlayer().getBounds().overlaps(world.getExitZone())) {
+            if (Constants.LEVEL_2_MAP.equals(currentLevel)) {
+                ((Main) Gdx.app.getApplicationListener()).setScreen(new com.java_game_project.screens.GameScreen(
+                        (Main) Gdx.app.getApplicationListener(), Constants.LEVEL_3_MAP));
+            } else if (Constants.LEVEL_3_MAP.equals(currentLevel)) {
+                // End of demo / Win -> Back to Menu
+                ((Main) Gdx.app.getApplicationListener()).setScreen(new com.java_game_project.screens.GameScreen(
+                        (Main) Gdx.app.getApplicationListener(), Constants.LEVEL_2_MAP));
+            }
         }
 
         updateCamera(camera);

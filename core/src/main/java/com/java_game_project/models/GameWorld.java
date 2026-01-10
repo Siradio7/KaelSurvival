@@ -8,6 +8,7 @@ public class GameWorld {
     private final Array<Ork> orks = new Array<>();
 
     private Rectangle target;
+    private Rectangle exitZone;
 
     public void setPlayer(Player player) {
         this.player = player;
@@ -30,7 +31,7 @@ public class GameWorld {
         allBlockers.clear();
         allBlockers.addAll(trees);
         allBlockers.addAll(walls);
-        
+
         for (Consumable c : consumables) {
             allBlockers.add(c.getBounds());
         }
@@ -69,11 +70,21 @@ public class GameWorld {
         this.target = target;
     }
 
+    public Rectangle getExitZone() {
+        return exitZone;
+    }
+
+    public void setExitZone(Rectangle exitZone) {
+        this.exitZone = exitZone;
+    }
+
     public void clear() {
         orks.clear();
         trees.clear();
         walls.clear();
         consumables.clear();
+        consumables.clear();
         target = null;
+        exitZone = null;
     }
 }
