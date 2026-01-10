@@ -26,6 +26,7 @@ public class GameWorld {
     private final Array<Rectangle> trees = new Array<>();
     private final Array<Rectangle> walls = new Array<>();
     private final Array<Consumable> consumables = new Array<>();
+    private final Array<FloatingText> floatingTexts = new Array<>();
     private final Array<Rectangle> allBlockers = new Array<>();
 
     public Array<Rectangle> getObstacles() {
@@ -79,6 +80,14 @@ public class GameWorld {
         this.exitZone = exitZone;
     }
 
+    public Array<FloatingText> getFloatingTexts() {
+        return floatingTexts;
+    }
+
+    public void addFloatingText(FloatingText text) {
+        floatingTexts.add(text);
+    }
+
     public float getTime() {
         return time;
     }
@@ -92,7 +101,7 @@ public class GameWorld {
         trees.clear();
         walls.clear();
         consumables.clear();
-        consumables.clear();
+        floatingTexts.clear();
         target = null;
         exitZone = null;
     }

@@ -5,12 +5,15 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.MathUtils;
-import com.java_game_project.models.Consumable;
 import com.java_game_project.Main;
+import com.java_game_project.models.Consumable;
+import com.java_game_project.models.FloatingText;
 import com.java_game_project.models.GameWorld;
 import com.java_game_project.models.Ork;
 import com.java_game_project.screens.GameOverScreen;
 import com.java_game_project.utils.Constants;
+import com.badlogic.gdx.graphics.Color;
+import java.util.Iterator;
 
 public class GameController {
     private final GameWorld world;
@@ -40,11 +43,23 @@ public class GameController {
             ork.update(delta);
 
             if (world.getPlayer().getBounds().overlaps(ork.getBounds())) {
-                world.getPlayer().takeDamage(10);
+                if (!world.getPlayer().isInvincible()) {
+                    world.getPlayer().takeDamage(10);
+                    world.addFloatingText(new FloatingText("-10", world.getPlayer().getPosition().x,
+                            world.getPlayer().getPosition().y + 50, Color.RED));
+                }
             }
         }
 
-        // Update global time
+        Iterator<FloatingText> iter = world.getFloatingTexts().iterator();
+        while (iter.hasNext()) {
+            FloatingText text = iter.next();
+            text.update(delta);
+            if (text.isFinished()) {
+                iter.remove();
+            }
+        }
+
         world.setTime(world.getTime() + delta);
 
         if (world.getPlayer().getHealth() <= 0) {
@@ -85,6 +100,8 @@ public class GameController {
                     if (MathUtils.random() < Consumable.getHealRate() * delta) {
                         world.getPlayer().setHealth(
                                 Math.min(world.getPlayer().getHealth() + 1, world.getPlayer().getMaxHealth()));
+                        world.addFloatingText(new FloatingText("+1", world.getPlayer().getPosition().x,
+                                world.getPlayer().getPosition().y + 50, Color.GREEN));
                     }
                 } else {
                     item.consume();

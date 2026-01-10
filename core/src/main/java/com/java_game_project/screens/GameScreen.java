@@ -27,7 +27,7 @@ public class GameScreen extends AbstractScreen {
     private float initialTime = 0;
 
     public GameScreen(Main game) {
-        this(game, Constants.LEVEL_2_MAP); // Default to Level 2
+        this(game, Constants.LEVEL_2_MAP);
     }
 
     public GameScreen(Main game, String mapName) {
@@ -48,10 +48,10 @@ public class GameScreen extends AbstractScreen {
         camera.zoom = 0.7f;
 
         world = new GameWorld();
-        world.setTime(initialTime); // Restore time
+        world = new GameWorld();
+        world.setTime(initialTime);
         loadMapData();
 
-        // Restore health if applicable
         if (initialHealth != -1 && world.getPlayer() != null) {
             world.getPlayer().setHealth(initialHealth);
         }

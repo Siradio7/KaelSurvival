@@ -3,6 +3,7 @@ package com.java_game_project.views;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -20,6 +21,7 @@ public class WorldRenderer {
     private final Animation<TextureRegion> playerWalkAnim;
     private final Animation<TextureRegion> orkWalkAnim;
     private final TextureRegion playerIdle, orkIdle;
+    private final BitmapFont font;
 
     public WorldRenderer(GameWorld world) {
         this.world = world;
@@ -33,6 +35,9 @@ public class WorldRenderer {
 
         this.playerIdle = new TextureRegion(new Texture(Gdx.files.internal("images/player.png")));
         this.orkIdle = new TextureRegion(new Texture(Gdx.files.internal("maps/ork.png")));
+
+        this.font = new BitmapFont();
+        this.font.setUseIntegerPositions(false);
     }
 
     public void render(SpriteBatch batch, OrthographicCamera camera) {
@@ -74,12 +79,17 @@ public class WorldRenderer {
         }
 
         if (world.getExitZone() != null) {
-            float scale = 2.0f; // Increase visual size without changing hitbox
+            float scale = 2.0f;
             float width = world.getExitZone().width * scale;
             float height = world.getExitZone().height * scale;
             float x = world.getExitZone().x - (width - world.getExitZone().width) / 2;
             float y = world.getExitZone().y - (height - world.getExitZone().height) / 2;
             batch.draw(exitTex, x, y, width, height);
+        }
+
+        for (com.java_game_project.models.FloatingText ft : world.getFloatingTexts()) {
+            font.setColor(ft.getColor().r, ft.getColor().g, ft.getColor().b, ft.getAlpha());
+            font.draw(batch, ft.getText(), ft.getX(), ft.getY());
         }
 
         batch.end();
@@ -90,6 +100,8 @@ public class WorldRenderer {
         caveTex.dispose();
         exitTex.dispose();
         playerIdle.getTexture().dispose();
+        playerIdle.getTexture().dispose();
         orkIdle.getTexture().dispose();
+        font.dispose();
     }
 }
