@@ -3,8 +3,6 @@ package com.java_game_project.utils;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.maps.MapLayer;
-import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.java_game_project.models.MapModel;
@@ -17,7 +15,6 @@ public class MapManager {
     private final Map<String, MapModel> maps = new HashMap<>();
     private OrthogonalTiledMapRenderer renderer;
     private TiledMap currentMap;
-    private String currentMapName;
 
     public static MapManager getInstance() {
         if (instance == null) {
@@ -56,7 +53,6 @@ public class MapManager {
 
         currentMap = maps.get(mapName).getMap();
         renderer = new OrthogonalTiledMapRenderer(currentMap);
-        currentMapName = mapName;
     }
 
     public TiledMap getCurrentMap() {
