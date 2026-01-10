@@ -9,7 +9,7 @@ public class GameWorld {
 
     private Rectangle target;
     private Rectangle exitZone;
-    private float time; // Global game time
+    private float time;
 
     public void setPlayer(Player player) {
         this.player = player;
@@ -27,6 +27,7 @@ public class GameWorld {
     private final Array<Rectangle> walls = new Array<>();
     private final Array<Consumable> consumables = new Array<>();
     private final Array<FloatingText> floatingTexts = new Array<>();
+    private final Array<Projectile> projectiles = new Array<>();
     private final Array<Rectangle> allBlockers = new Array<>();
 
     public Array<Rectangle> getObstacles() {
@@ -88,6 +89,14 @@ public class GameWorld {
         floatingTexts.add(text);
     }
 
+    public Array<Projectile> getProjectiles() {
+        return projectiles;
+    }
+
+    public void addProjectile(Projectile p) {
+        projectiles.add(p);
+    }
+
     public float getTime() {
         return time;
     }
@@ -102,6 +111,7 @@ public class GameWorld {
         walls.clear();
         consumables.clear();
         floatingTexts.clear();
+        projectiles.clear();
         target = null;
         exitZone = null;
     }

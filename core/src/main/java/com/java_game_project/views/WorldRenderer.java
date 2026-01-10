@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
 import com.java_game_project.models.GameWorld;
 import com.java_game_project.models.Ork;
 import com.java_game_project.models.Player;
@@ -17,10 +18,11 @@ import com.java_game_project.utils.MapManager;
 
 public class WorldRenderer {
     private final GameWorld world;
-    private final Texture treeTex, caveTex, exitTex;
-    private final Animation<TextureRegion> playerWalkAnim;
+    private final Texture treeTex, caveTex, exitTex, projectileTex;
+    private final Animation<TextureRegion> playerWalkAnim, playerAttackAnim;
     private final Animation<TextureRegion> orkWalkAnim;
     private final TextureRegion playerIdle, orkIdle;
+    private final TextureRegion arrowRegion;
     private final BitmapFont font;
 
     public WorldRenderer(GameWorld world) {
@@ -29,8 +31,11 @@ public class WorldRenderer {
         this.treeTex = new Texture(Gdx.files.internal("maps/TilesTree.png"));
         this.caveTex = new Texture(Gdx.files.internal("maps/mystic_cave.png"));
         this.exitTex = new Texture(Gdx.files.internal("images/portail.png"));
+        this.projectileTex = new Texture(Gdx.files.internal("images/arrow.png"));
+        this.arrowRegion = new TextureRegion(projectileTex);
 
         this.playerWalkAnim = AnimationUtils.loadAnimation("images/player_walk.png", 250, 250, 0.1f);
+        this.playerAttackAnim = AnimationUtils.loadAnimation("images/kael_attack.png", 250, 250, 0.15f);
         this.orkWalkAnim = AnimationUtils.loadAnimation("images/ork_attack.png", 250, 250, 0.1f);
 
         this.playerIdle = new TextureRegion(new Texture(Gdx.files.internal("images/player.png")));
@@ -51,13 +56,23 @@ public class WorldRenderer {
             if (p.isInvincible() && p.getStateTime() % 0.2f < 0.1f) {
 
             } else {
-                TextureRegion currentFrame = (p.getState() == EntityState.WALKING)
-                        ? playerWalkAnim.getKeyFrame(p.getStateTime(), true)
-                        : playerIdle;
+                TextureRegion currentFrame = playerIdle;
+                if (p.getState() == EntityState.WALKING) {
+                    currentFrame = playerWalkAnim.getKeyFrame(p.getStateTime(), true);
+                } else if (p.getState() == EntityState.ATTACKING) {
+                    currentFrame = playerAttackAnim.getKeyFrame(p.getStateTime(), false);
+                }
 
                 batch.draw(currentFrame, p.getPosition().x, p.getPosition().y, p.getBounds().width / 2,
                         p.getBounds().height / 2, p.getBounds().width, p.getBounds().height, 1, 1, p.getRotation());
             }
+        }
+
+        for (com.java_game_project.models.Projectile proj : world.getProjectiles()) {
+            Vector2 visualPos = proj.getVisualPosition();
+            batch.draw(arrowRegion, visualPos.x, visualPos.y,
+                    proj.getBounds().width / 2, proj.getBounds().height / 2,
+                    proj.getBounds().width, proj.getBounds().height, 1, 1, proj.getVisualRotation());
         }
 
         for (Rectangle r : world.getTrees()) {
@@ -99,6 +114,7 @@ public class WorldRenderer {
         treeTex.dispose();
         caveTex.dispose();
         exitTex.dispose();
+        projectileTex.dispose();
         playerIdle.getTexture().dispose();
         playerIdle.getTexture().dispose();
         orkIdle.getTexture().dispose();
