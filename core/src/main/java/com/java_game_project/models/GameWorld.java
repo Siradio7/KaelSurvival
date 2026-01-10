@@ -9,6 +9,7 @@ public class GameWorld {
 
     private Rectangle target;
     private Rectangle exitZone;
+    private float time; // Global game time
 
     public void setPlayer(Player player) {
         this.player = player;
@@ -76,6 +77,14 @@ public class GameWorld {
 
     public void setExitZone(Rectangle exitZone) {
         this.exitZone = exitZone;
+    }
+
+    public float getTime() {
+        return time;
+    }
+
+    public void setTime(float time) {
+        this.time = time;
     }
 
     public void clear() {

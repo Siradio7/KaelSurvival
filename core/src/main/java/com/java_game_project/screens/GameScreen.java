@@ -23,6 +23,8 @@ public class GameScreen extends AbstractScreen {
     private WorldRenderer renderer;
     private Hud hud;
     private String currentMapName;
+    private int initialHealth = -1;
+    private float initialTime = 0;
 
     public GameScreen(Main game) {
         this(game, Constants.LEVEL_2_MAP); // Default to Level 2
@@ -33,17 +35,30 @@ public class GameScreen extends AbstractScreen {
         this.currentMapName = mapName;
     }
 
+    public GameScreen(Main game, String mapName, int health, float time) {
+        super(game);
+        this.currentMapName = mapName;
+        this.initialHealth = health;
+        this.initialTime = time;
+    }
+
     @Override
     public void show() {
         camera.setToOrtho(false, Constants.WINDOW_WIDTH, Constants.WINDOW_HEIGHT);
         camera.zoom = 0.7f;
 
         world = new GameWorld();
+        world.setTime(initialTime); // Restore time
         loadMapData();
+
+        // Restore health if applicable
+        if (initialHealth != -1 && world.getPlayer() != null) {
+            world.getPlayer().setHealth(initialHealth);
+        }
 
         controller = new GameController(world, currentMapName);
         renderer = new WorldRenderer(world);
-        hud = new Hud(batch, world.getPlayer());
+        hud = new Hud(batch, world);
     }
 
     private void loadMapData() {

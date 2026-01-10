@@ -44,7 +44,7 @@ public class WorldRenderer {
         Player p = world.getPlayer();
         if (p != null) {
             if (p.isInvincible() && p.getStateTime() % 0.2f < 0.1f) {
-                // Blink effect: skip drawing every 0.1s
+
             } else {
                 TextureRegion currentFrame = (p.getState() == EntityState.WALKING)
                         ? playerWalkAnim.getKeyFrame(p.getStateTime(), true)

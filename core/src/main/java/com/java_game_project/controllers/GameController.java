@@ -10,7 +10,6 @@ import com.java_game_project.Main;
 import com.java_game_project.models.GameWorld;
 import com.java_game_project.models.Ork;
 import com.java_game_project.screens.GameOverScreen;
-import com.java_game_project.screens.MenuScreen;
 import com.java_game_project.utils.Constants;
 
 public class GameController {
@@ -45,20 +44,24 @@ public class GameController {
             }
         }
 
+        // Update global time
+        world.setTime(world.getTime() + delta);
+
         if (world.getPlayer().getHealth() <= 0) {
             ((Main) Gdx.app.getApplicationListener())
                     .setScreen(new GameOverScreen((Main) Gdx.app.getApplicationListener()));
         }
 
-        // Handle level exit
         if (world.getExitZone() != null && world.getPlayer().getBounds().overlaps(world.getExitZone())) {
+            int currentHealth = world.getPlayer().getHealth();
+            float currentTime = world.getTime();
+
             if (Constants.LEVEL_2_MAP.equals(currentLevel)) {
                 ((Main) Gdx.app.getApplicationListener()).setScreen(new com.java_game_project.screens.GameScreen(
-                        (Main) Gdx.app.getApplicationListener(), Constants.LEVEL_3_MAP));
+                        (Main) Gdx.app.getApplicationListener(), Constants.LEVEL_3_MAP, currentHealth, currentTime));
             } else if (Constants.LEVEL_3_MAP.equals(currentLevel)) {
-                // End of demo / Win -> Back to Menu
                 ((Main) Gdx.app.getApplicationListener()).setScreen(new com.java_game_project.screens.GameScreen(
-                        (Main) Gdx.app.getApplicationListener(), Constants.LEVEL_2_MAP));
+                        (Main) Gdx.app.getApplicationListener(), Constants.LEVEL_2_MAP, currentHealth, currentTime));
             }
         }
 

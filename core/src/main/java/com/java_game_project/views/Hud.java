@@ -17,7 +17,7 @@ import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.java_game_project.models.Player;
+import com.java_game_project.models.GameWorld;
 import com.java_game_project.utils.Constants;
 
 public class Hud implements Disposable {
@@ -25,24 +25,22 @@ public class Hud implements Disposable {
     private Viewport viewport;
 
     private Integer worldTimer;
-    private float timeCount;
+    private GameWorld world;
 
     private Label countdownLabel;
     private Label timeLabel;
     private Label healthLabel;
     private Label healthValueLabel;
 
-    private Player player;
     private BitmapFont font;
 
     private Image healthBar;
     private float maxBarWidth = 200f;
     private TextureRegionDrawable greenDrawable, yellowDrawable, redDrawable;
 
-    public Hud(SpriteBatch sb, Player player) {
-        this.player = player;
+    public Hud(SpriteBatch sb, GameWorld world) {
+        this.world = world;
         worldTimer = 0;
-        timeCount = 0;
 
         viewport = new StretchViewport(Constants.WINDOW_WIDTH, Constants.WINDOW_HEIGHT, new OrthographicCamera());
         stage = new Stage(viewport, sb);
@@ -100,32 +98,26 @@ public class Hud implements Disposable {
     }
 
     public void update(float dt) {
-        timeCount += dt;
-        if (timeCount >= 1) {
-            worldTimer++;
-            countdownLabel.setText(String.format("%03d", worldTimer));
-            timeCount = 0;
-        }
+        worldTimer = (int) world.getTime();
+        countdownLabel.setText(String.format("%03d", worldTimer));
 
-        if (player != null) {
-            float healthPercent = (float) player.getHealth() / player.getMaxHealth();
-            healthValueLabel.setText(player.getHealth() + "%");
+        if (world.getPlayer() == null)
+            return;
 
-            if (healthPercent > 0.5f) {
-                healthBar.setDrawable(greenDrawable);
-            } else if (healthPercent > 0.25f) {
-                healthBar.setDrawable(yellowDrawable);
-            } else {
-                healthBar.setDrawable(redDrawable);
-            }
+        float health = world.getPlayer().getHealth();
+        float maxHealth = world.getPlayer().getMaxHealth();
+        float percentage = health / maxHealth;
 
-            if (healthPercent < 0.3f) {
-                healthValueLabel.setColor(Color.RED);
-            } else {
-                healthValueLabel.setColor(Color.WHITE);
-            }
+        healthValueLabel.setText((int) health + "%");
 
-            healthBar.setScaleX(healthPercent);
+        healthBar.setScaleX(percentage);
+
+        if (percentage > 0.6f) {
+            healthBar.setDrawable(greenDrawable);
+        } else if (percentage > 0.3f) {
+            healthBar.setDrawable(yellowDrawable);
+        } else {
+            healthBar.setDrawable(redDrawable);
         }
     }
 
