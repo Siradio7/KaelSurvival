@@ -22,14 +22,13 @@ public class IntroScreen extends AbstractScreen {
     @Override
     public void show() {
         font = new BitmapFont(Gdx.files.internal(Constants.FONT));
-        font.getData().setScale(1.1f);
+        font.getData().setScale(1.5f);
     }
 
     @Override
     public void render(float delta) {
         lineTimer += delta;
 
-        // Nettoyage de l’écran
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
