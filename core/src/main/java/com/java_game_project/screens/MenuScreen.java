@@ -44,13 +44,20 @@ public class MenuScreen extends AbstractScreen {
         playButton.getLabel().setFontScale(0.5f);
         quitButton.getLabel().setFontScale(0.5f);
 
-        Table table = new Table();
-        table.setFillParent(true);
-        table.center();
-        table.add(playButton).size(220, 60).padBottom(20).row();
-        table.add(quitButton).size(220, 60);
+        Table mainTable = new Table();
+        mainTable.setFillParent(true);
 
-        stage.addActor(table);
+        Table buttonTable = new Table();
+        buttonTable.add(playButton).size(220, 60).padBottom(20).row();
+        buttonTable.add(quitButton).size(220, 60);
+
+        mainTable.add(buttonTable).expand().center();
+        mainTable.row();
+        mainTable.add(new com.badlogic.gdx.scenes.scene2d.ui.Label(
+                "v1.0 - Created by Mamadou Siradiou, Sara and Cesaire", skin))
+                .bottom().padBottom(10);
+
+        stage.addActor(mainTable);
 
         playButton.addListener(new ChangeListener() {
             @Override
@@ -77,15 +84,16 @@ public class MenuScreen extends AbstractScreen {
         ScreenUtils.clear(0, 0, 0, 1);
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
-        batch.draw(background, 0, 0, Constants.WINDOW_WIDTH, Constants.WINDOW_HEIGHT, (int)backgroundScroll, 0, background.getWidth(), background.getHeight(), false, false);
+        batch.draw(background, 0, 0, Constants.WINDOW_WIDTH, Constants.WINDOW_HEIGHT, (int) backgroundScroll, 0,
+                background.getWidth(), background.getHeight(), false, false);
         batch.end();
         stage.act(delta);
         stage.draw();
 
-        if(Gdx.input.isKeyPressed(Input.Keys.P)) {
+        if (Gdx.input.isKeyPressed(Input.Keys.P)) {
             camera.zoom -= 0.2f;
         }
-        if(Gdx.input.isKeyPressed(Input.Keys.M)) {
+        if (Gdx.input.isKeyPressed(Input.Keys.M)) {
             camera.zoom += 0.2f;
         }
 
