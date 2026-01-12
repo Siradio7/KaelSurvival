@@ -8,10 +8,7 @@ import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.math.Rectangle;
 import com.java_game_project.Main;
 import com.java_game_project.controllers.GameController;
-import com.java_game_project.models.Consumable;
-import com.java_game_project.models.GameWorld;
-import com.java_game_project.models.Ork;
-import com.java_game_project.models.Player;
+import com.java_game_project.models.*;
 import com.java_game_project.utils.Constants;
 import com.java_game_project.utils.MapManager;
 import com.java_game_project.views.WorldRenderer;
@@ -84,7 +81,15 @@ public class GameScreen extends AbstractScreen {
                 world.getOrks().add(new Ork(rect.x, rect.y, 70, 70));
             } else if ("target".equals(name)) {
                 world.setTarget(new Rectangle(rect));
-            } else if ("exit_zone".equals(name)) {
+            } if ("poulet".equals(name)) {
+                if (Constants.LEVEL_2_MAP.equals(currentMapName)) {
+                    world.getPoulets().add(new Poulet(rect.x, rect.y));
+                }
+            } else if ("mouton".equals(name)) {
+                if (Constants.LEVEL_2_MAP.equals(currentMapName)) {
+                    world.getMoutons().add(new Mouton(rect.x, rect.y));
+                }
+            }else if ("exit_zone".equals(name)) {
                 world.setExitZone(new Rectangle(rect));
             }
         }
@@ -92,6 +97,14 @@ public class GameScreen extends AbstractScreen {
 
     @Override
     public void render(float delta) {
+        for (Poulet p : world.getPoulets()) {
+            p.updateAI(delta, world.getObstacles(), world.getTarget());
+        }
+
+        for (Mouton m : world.getMoutons()) {
+            m.updateAI(delta, world.getObstacles(), world.getTarget());
+        }
+
         controller.update(delta, camera);
 
         Gdx.gl.glViewport(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());

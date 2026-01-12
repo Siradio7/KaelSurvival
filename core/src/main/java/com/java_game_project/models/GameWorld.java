@@ -29,6 +29,8 @@ public class GameWorld {
     private final Array<FloatingText> floatingTexts = new Array<>();
     private final Array<Projectile> projectiles = new Array<>();
     private final Array<Rectangle> allBlockers = new Array<>();
+    private final Array<Poulet> poulets = new Array<>();
+    private final Array<Mouton> moutons = new Array<>();
 
     public Array<Rectangle> getObstacles() {
         allBlockers.clear();
@@ -40,6 +42,9 @@ public class GameWorld {
         }
         return allBlockers;
     }
+
+    public Array<Poulet> getPoulets() { return poulets; }
+    public Array<Mouton> getMoutons() { return moutons; }
 
     public Array<Rectangle> getTrees() {
         return trees;
@@ -103,6 +108,16 @@ public class GameWorld {
 
     public void setTime(float time) {
         this.time = time;
+    }
+
+    public void update(float delta) {
+        for (Poulet p : poulets) {
+            p.update(delta);
+        }
+
+        for (Mouton m : moutons) {
+            m.update(delta);
+        }
     }
 
     public void clear() {

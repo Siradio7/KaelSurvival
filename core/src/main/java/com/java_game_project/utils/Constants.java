@@ -20,6 +20,9 @@ public abstract class Constants {
     public static final float PLAYER_SPEED = 100f;
     public static final float ORK_SPEED = 40f;
 
+    public static final float POULET_SPEED = 50f;
+    public static final float MOUTON_SPEED = 40f;
+
     public static final String MAPS_PATH = "assets/maps/";
     public static final String LEVEL_1_MAP = "level_1";
     public static final String LEVEL_2_MAP = "level_2";
