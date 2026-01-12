@@ -64,7 +64,7 @@ public class MenuScreen extends AbstractScreen {
             public void changed(ChangeEvent event, Actor actor) {
                 audioManager.playSound(Constants.MOUSE_CLICK_SOUND);
                 Gdx.app.postRunnable(() -> {
-                    game.setScreen(new GameScreen(game));
+                    game.setScreen(new IntroScreen(game));
                 });
             }
         });
