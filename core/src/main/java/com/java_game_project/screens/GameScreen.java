@@ -81,7 +81,8 @@ public class GameScreen extends AbstractScreen {
                 world.getOrks().add(new Ork(rect.x, rect.y, 70, 70));
             } else if ("target".equals(name)) {
                 world.setTarget(new Rectangle(rect));
-            } if ("poulet".equals(name)) {
+            }
+            if ("poulet".equals(name)) {
                 if (Constants.LEVEL_2_MAP.equals(currentMapName)) {
                     world.getPoulets().add(new Poulet(rect.x, rect.y));
                 }
@@ -89,7 +90,7 @@ public class GameScreen extends AbstractScreen {
                 if (Constants.LEVEL_2_MAP.equals(currentMapName)) {
                     world.getMoutons().add(new Mouton(rect.x, rect.y));
                 }
-            }else if ("exit_zone".equals(name)) {
+            } else if ("exit_zone".equals(name)) {
                 world.setExitZone(new Rectangle(rect));
             }
         }
@@ -104,18 +105,22 @@ public class GameScreen extends AbstractScreen {
         for (Mouton m : world.getMoutons()) {
             m.updateAI(delta, world.getObstacles(), world.getTarget());
         }
+        try {
+            controller.update(delta, camera);
 
-        controller.update(delta, camera);
+            Gdx.gl.glViewport(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+            Gdx.gl.glClearColor(0, 0, 0, 1);
+            Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        Gdx.gl.glViewport(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        Gdx.gl.glClearColor(0, 0, 0, 1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+            renderer.render(batch, camera);
 
-        renderer.render(batch, camera);
-
-        batch.setProjectionMatrix(hud.stage.getCamera().combined);
-        hud.stage.draw();
-        hud.update(delta);
+            batch.setProjectionMatrix(hud.stage.getCamera().combined);
+            hud.stage.draw();
+            hud.update(delta);
+        } catch (Exception e) {
+            Gdx.app.error("GameScreen", "Crash in render loop", e);
+            e.printStackTrace();
+        }
     }
 
     @Override
