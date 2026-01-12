@@ -64,15 +64,19 @@ public class GameController {
             float pX = world.getPlayer().getPosition().x + world.getPlayer().getBounds().width / 2;
             float pY = world.getPlayer().getPosition().y + world.getPlayer().getBounds().height / 2;
 
+            // --- AUTO-AIM ---
+            // Recherche automatique de l'ennemi le plus proche dans un rayon de 500px.
             Ork targetOrk = findNearestOrk(500.0f);
             float tX, tY;
 
             if (targetOrk != null) {
+                // Si un Ork est trouvé, on vise son centre.
                 tX = targetOrk.getPosition().x + targetOrk.getBounds().width / 2;
                 tY = targetOrk.getPosition().y + targetOrk.getBounds().height / 2;
             } else {
-                tX = touchPoint.x;
-                tY = touchPoint.y;
+                // Pas d'ennemi à portée -> Pas de tir.
+                // On annule le tir pour éviter de tirer dans le vide.
+                return;
             }
 
             float dx = tX - pX;
@@ -92,13 +96,16 @@ public class GameController {
 
         world.getPlayer().update(delta, world.getObstacles(), world.getTarget());
 
-        Iterator<Projectile> pIter = world.getProjectiles().iterator();
-        while (pIter.hasNext()) {
-            Projectile p = pIter.next();
+        // --- GESTION DES PROJECTILES ---
+        // Utilisation d'une boucle inversée pour suppression sûre
+        for (int i = world.getProjectiles().size - 1; i >= 0; i--) {
+            Projectile p = world.getProjectiles().get(i);
             p.update(delta);
+
             boolean hit = false;
+            // Vérification de collision avec les ennemis
             for (Ork ork : world.getOrks()) {
-                if (p.getBounds().overlaps(ork.getBounds())) {
+                if (ork.getHealth() > 0 && p.getBounds().overlaps(ork.getBounds())) {
                     ork.damage(25);
                     world.addFloatingText(new FloatingText("-25", ork.getPosition().x, ork.getPosition().y + 50,
                             Color.RED, FloatingText.Type.DAMAGE));
@@ -107,25 +114,19 @@ public class GameController {
                 }
             }
 
-            if (hit || world.getPlayer().getPosition().dst(p.getPosition()) > 1000) {
+            if (hit || !p.isActive() || world.getPlayer().getPosition().dst(p.getPosition()) > 1000) {
                 p.setActive(false);
-                pIter.remove();
-            }
-
-            if (hit || world.getPlayer().getPosition().dst(p.getPosition()) > 1000) {
-                p.setActive(false);
-                pIter.remove();
+                world.getProjectiles().removeIndex(i); // Suppression par index
             }
         }
 
-        Iterator<Ork> orkIter = world.getOrks().iterator();
-        for (; orkIter.hasNext();) {
-            Ork ork = orkIter.next();
-
+        // Suppression des Orks morts (boucle inversée)
+        for (int i = world.getOrks().size - 1; i >= 0; i--) {
+            Ork ork = world.getOrks().get(i);
             if (ork.getHealth() <= 0) {
-                orkIter.remove();
                 world.addFloatingText(new FloatingText("Mort !", ork.getPosition().x, ork.getPosition().y, Color.GRAY,
                         FloatingText.Type.THOUGHT));
+                world.getOrks().removeIndex(i);
             }
         }
 
@@ -271,7 +272,7 @@ public class GameController {
                 continue;
 
             float dst = playerPos.dst(ork.getPosition());
-            
+
             if (dst < minDst) {
                 minDst = dst;
                 nearest = ork;
