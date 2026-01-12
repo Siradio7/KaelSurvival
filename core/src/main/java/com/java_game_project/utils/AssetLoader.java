@@ -13,7 +13,13 @@ public class AssetLoader {
      */
     public static Texture getTexture(String path) {
         if (!textures.containsKey(path)) {
-            textures.put(path, new Texture(Gdx.files.internal(path)));
+            if (Gdx.files.internal(path).exists()) {
+                textures.put(path, new Texture(Gdx.files.internal(path)));
+            } else if (Gdx.files.internal("assets/" + path).exists()) {
+                textures.put(path, new Texture(Gdx.files.internal("assets/" + path)));
+            } else {
+                textures.put(path, new Texture(Gdx.files.internal(path)));
+            }
         }
         return textures.get(path);
     }

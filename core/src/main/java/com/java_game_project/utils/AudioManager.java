@@ -24,7 +24,8 @@ public class AudioManager {
         return audioManager;
     }
 
-    private AudioManager() {}
+    private AudioManager() {
+    }
 
     public void loadMusic(String key, String filePath) {
         Music music = Gdx.audio.newMusic(Gdx.files.internal(filePath));
@@ -36,7 +37,12 @@ public class AudioManager {
         FileHandle folder = Gdx.files.internal(path);
 
         if (!folder.exists() || !folder.isDirectory()) {
-            Gdx.app.error("AudioManager", "Le dossier " + path + " est introuvable ou invalide !");
+            folder = Gdx.files.internal("assets/" + path);
+        }
+
+        if (!folder.exists() || !folder.isDirectory()) {
+            Gdx.app.error("AudioManager",
+                    "Le dossier " + path + " (ou assets/" + path + ") est introuvable ou invalide !");
             return;
         }
 
@@ -60,7 +66,12 @@ public class AudioManager {
         FileHandle folder = Gdx.files.internal(path);
 
         if (!folder.exists() || !folder.isDirectory()) {
-            Gdx.app.error("AudioManager", "Le dossier " + path + " est introuvable ou invalide !");
+            folder = Gdx.files.internal("assets/" + path);
+        }
+
+        if (!folder.exists() || !folder.isDirectory()) {
+            Gdx.app.error("AudioManager",
+                    "Le dossier " + path + " (ou assets/" + path + ") est introuvable ou invalide !");
             return;
         }
 

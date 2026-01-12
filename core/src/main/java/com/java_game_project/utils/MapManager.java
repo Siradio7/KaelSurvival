@@ -32,7 +32,12 @@ public class MapManager {
         FileHandle folder = Gdx.files.internal(path);
 
         if (!folder.exists() || !folder.isDirectory()) {
-            Gdx.app.error("MapManager", "Le dossier " + path + " est introuvable ou invalide !");
+            folder = Gdx.files.internal("assets/" + path);
+        }
+
+        if (!folder.exists() || !folder.isDirectory()) {
+            Gdx.app.error("MapManager",
+                    "Le dossier " + path + " (ou assets/" + path + ") est introuvable ou invalide !");
             return;
         }
 
