@@ -11,10 +11,11 @@ import com.java_game_project.models.FloatingText;
 import com.java_game_project.models.GameWorld;
 import com.java_game_project.models.Ork;
 import com.java_game_project.screens.GameOverScreen;
+import com.java_game_project.screens.GameScreen;
+import com.java_game_project.screens.VictoryScreen;
 import com.java_game_project.utils.Constants;
 import com.java_game_project.utils.NarrationConstants;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.java_game_project.models.Projectile;
@@ -96,14 +97,11 @@ public class GameController {
 
         world.getPlayer().update(delta, world.getObstacles(), world.getTarget());
 
-        // --- GESTION DES PROJECTILES ---
-        // Utilisation d'une boucle inversée pour suppression sûre
         for (int i = world.getProjectiles().size - 1; i >= 0; i--) {
             Projectile p = world.getProjectiles().get(i);
             p.update(delta);
 
             boolean hit = false;
-            // Vérification de collision avec les ennemis
             for (Ork ork : world.getOrks()) {
                 if (ork.getHealth() > 0 && p.getBounds().overlaps(ork.getBounds())) {
                     ork.damage(25);
@@ -116,11 +114,10 @@ public class GameController {
 
             if (hit || !p.isActive() || world.getPlayer().getPosition().dst(p.getPosition()) > 1000) {
                 p.setActive(false);
-                world.getProjectiles().removeIndex(i); // Suppression par index
+                world.getProjectiles().removeIndex(i);
             }
         }
 
-        // Suppression des Orks morts (boucle inversée)
         for (int i = world.getOrks().size - 1; i >= 0; i--) {
             Ork ork = world.getOrks().get(i);
             if (ork.getHealth() <= 0) {
@@ -159,15 +156,23 @@ public class GameController {
                     .setScreen(new GameOverScreen((Main) Gdx.app.getApplicationListener()));
         }
 
+        if (world.getTarget() != null) {
+            float dist = world.getPlayer().getPosition().dst(world.getTarget().x, world.getTarget().y);
+
+            if (dist < 100 || world.getPlayer().getBounds().overlaps(world.getTarget())) {
+                ((Main) Gdx.app.getApplicationListener()).setScreen(new VictoryScreen((Main) Gdx.app.getApplicationListener()));
+            }
+        }
+
         if (world.getExitZone() != null && world.getPlayer().getBounds().overlaps(world.getExitZone())) {
             int currentHealth = world.getPlayer().getHealth();
             float currentTime = world.getTime();
 
             if (Constants.LEVEL_2_MAP.equals(currentLevel)) {
-                ((Main) Gdx.app.getApplicationListener()).setScreen(new com.java_game_project.screens.GameScreen(
+                ((Main) Gdx.app.getApplicationListener()).setScreen(new GameScreen(
                         (Main) Gdx.app.getApplicationListener(), Constants.LEVEL_3_MAP, currentHealth, currentTime));
             } else if (Constants.LEVEL_3_MAP.equals(currentLevel)) {
-                ((Main) Gdx.app.getApplicationListener()).setScreen(new com.java_game_project.screens.GameScreen(
+                ((Main) Gdx.app.getApplicationListener()).setScreen(new GameScreen(
                         (Main) Gdx.app.getApplicationListener(), Constants.LEVEL_2_MAP, currentHealth, currentTime));
             }
         }
@@ -236,7 +241,7 @@ public class GameController {
 
     private void handleNarration() {
         if (!startThoughtTriggered && world.getTime() > 1.0f) {
-            world.addFloatingText(new FloatingText(com.java_game_project.utils.NarrationConstants.GAME_START_THOUGHT,
+            world.addFloatingText(new FloatingText(NarrationConstants.GAME_START_THOUGHT,
                     world.getPlayer().getPosition().x - 100, world.getPlayer().getPosition().y + 100, Color.CYAN,
                     FloatingText.Type.THOUGHT));
             startThoughtTriggered = true;
@@ -245,7 +250,7 @@ public class GameController {
         if (!exitThoughtTriggered && world.getExitZone() != null) {
             float dist = world.getPlayer().getPosition().dst(world.getExitZone().x, world.getExitZone().y);
             if (dist < 400) {
-                world.addFloatingText(new FloatingText(com.java_game_project.utils.NarrationConstants.EXIT_NEAR_THOUGHT,
+                world.addFloatingText(new FloatingText(NarrationConstants.EXIT_NEAR_THOUGHT,
                         world.getPlayer().getPosition().x - 100, world.getPlayer().getPosition().y + 100, Color.CYAN,
                         FloatingText.Type.THOUGHT));
                 exitThoughtTriggered = true;
