@@ -150,7 +150,6 @@ public class WorldRenderer {
         exitTex.dispose();
         projectileTex.dispose();
         playerIdle.getTexture().dispose();
-        playerIdle.getTexture().dispose();
         orkIdle.getTexture().dispose();
         font.dispose();
     }

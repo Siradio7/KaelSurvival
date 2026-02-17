@@ -3,6 +3,7 @@ package com.java_game_project.screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.maps.MapLayer;
+import com.badlogic.gdx.maps.MapLayers;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.math.Rectangle;
@@ -45,7 +46,6 @@ public class GameScreen extends AbstractScreen {
         camera.zoom = 0.7f;
 
         world = new GameWorld();
-        world = new GameWorld();
         world.setTime(initialTime);
         loadMapData();
 
@@ -62,7 +62,11 @@ public class GameScreen extends AbstractScreen {
         MapManager.getInstance().addMaps(Constants.MAPS_PATH);
         MapManager.getInstance().loadMap(currentMapName);
 
-        MapLayer layer = MapManager.getInstance().getCurrentMap().getLayers().get("Object Layer 1");
+        MapLayer layer = findObjectLayer();
+        if (layer == null) {
+            throw new IllegalStateException("No object layer found in map: " + currentMapName);
+        }
+
         for (MapObject object : layer.getObjects()) {
             if (!(object instanceof RectangleMapObject))
                 continue;
@@ -96,6 +100,23 @@ public class GameScreen extends AbstractScreen {
         }
     }
 
+
+    private MapLayer findObjectLayer() {
+        MapLayers layers = MapManager.getInstance().getCurrentMap().getLayers();
+        MapLayer preferredLayer = layers.get("Object Layer 1");
+        if (preferredLayer != null) {
+            return preferredLayer;
+        }
+
+        for (MapLayer layer : layers) {
+            if (layer.getObjects().getCount() > 0) {
+                return layer;
+            }
+        }
+
+        return null;
+    }
+
     @Override
     public void render(float delta) {
         for (Poulet p : world.getPoulets()) {
@@ -105,22 +126,18 @@ public class GameScreen extends AbstractScreen {
         for (Mouton m : world.getMoutons()) {
             m.updateAI(delta, world.getObstacles(), world.getTarget());
         }
-        try {
-            controller.update(delta, camera);
 
-            Gdx.gl.glViewport(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-            Gdx.gl.glClearColor(0, 0, 0, 1);
-            Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        controller.update(delta, camera);
 
-            renderer.render(batch, camera);
+        Gdx.gl.glViewport(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        Gdx.gl.glClearColor(0, 0, 0, 1);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-            batch.setProjectionMatrix(hud.stage.getCamera().combined);
-            hud.stage.draw();
-            hud.update(delta);
-        } catch (Exception e) {
-            Gdx.app.error("GameScreen", "Crash in render loop", e);
-            e.printStackTrace();
-        }
+        renderer.render(batch, camera);
+
+        batch.setProjectionMatrix(hud.stage.getCamera().combined);
+        hud.stage.draw();
+        hud.update(delta);
     }
 
     @Override
