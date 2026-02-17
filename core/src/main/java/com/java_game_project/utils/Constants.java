@@ -23,6 +23,9 @@ public abstract class Constants {
     public static final float POULET_SPEED = 50f;
     public static final float MOUTON_SPEED = 40f;
 
+    public static final float AUTO_AIM_RANGE = 500f;
+    public static final boolean AUTO_AIM_REQUIRE_TARGET = false;
+
     public static final String MAPS_PATH = "assets/maps/";
     public static final String LEVEL_1_MAP = "level_1";
     public static final String LEVEL_2_MAP = "level_2";
